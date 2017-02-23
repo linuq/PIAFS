@@ -46,11 +46,11 @@
     <div>
       <label> {"New element type"|translate}: </label>
       <select id="edit_form_element_type">
-      <option value="text"> {"Text"|translate} </option>
-      <option value="number"> {"Number"|translate} </option>
-      <!-- <option value="checkbox"> {"Checkbox"|translate} </option>
-      <option value="radio_button"> {"Radio Button"|translate} </option> -->
-    </select>
+        <option value="text"> {"Text"|translate} </option>
+        <option value="number"> {"Number"|translate} </option>
+        <option value="date"> {"Date"|translate} </option>
+        <!-- <option value="radio_button"> {"Radio Button"|translate} </option> -->
+      </select>
     </div>
     <button onclick="modifyFormElement()"> {'Edit'|translate} </button>
   </div>
@@ -66,8 +66,8 @@
     <select id="form_element_type">
       <option value="text"> {"Text"|translate} </option>
       <option value="number"> {"Number"|translate} </option>
-      <!-- <option value="checkbox"> {"Checkbox"|translate} </option>
-      <option value="radio_button"> {"Radio Button"|translate} </option> -->
+      <option value="date"> {"Date"|translate} </option>
+        <!-- <option value="radio_button"> {"Radio Button"|translate} </option> -->
     </select>
   </div>
   <button onclick="addFormElement()"> {'Add'|translate} </button>

@@ -8,12 +8,8 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 require_once("src/plugins/userInfo/include/post_validation.class.php");
-
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
+require_once('PHPUnit/Autoload.php');
+require_once('PHPUnit/Framework/Assert/Functions.php');
 //
 
 /**
@@ -43,7 +39,7 @@ class FeatureContext extends BehatContext
     public function iRunValidationIShouldGetFalse()
     {
         $actualValue = PostValidation::isValid($this->fieldToValidate);
-        PHPUnit_Framework_Assert::assertTrue($actualValue);
+        PHPUnit_Framework_Assert::assertFalse($actualValue);
     }
     
 }

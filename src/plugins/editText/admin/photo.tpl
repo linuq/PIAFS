@@ -1,4 +1,4 @@
-{combine_css path=$SKELETON_PATH|@cat:"admin/style.css"}
+{combine_css path=$EDIT_TEXT_PATH|@cat:"admin/style.css"}
 
 <head>
   <meta charset="UTF-8">
@@ -17,7 +17,7 @@
 
     <p>
 
-      <input type="submit" onclick="window.location.reload()" value="{'Save'|translate}" name="save_skeleton">
+      <input type="submit" onclick="window.location.reload()" value="{'Save'|translate}" name="save_edit_text">
       <input type="reset" />
 
     </p>

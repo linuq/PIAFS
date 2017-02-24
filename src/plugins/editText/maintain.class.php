@@ -6,7 +6,7 @@ defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
  * It must extends PluginMaintain and be named "PLUGINID_maintain"
  * where PLUGINID is the directory name of your plugin.
  */
-class skeleton_maintain extends PluginMaintain
+class editText_maintain extends PluginMaintain
 {
 
   private $dir;
@@ -16,7 +16,7 @@ class skeleton_maintain extends PluginMaintain
     parent::__construct($plugin_id); // always call parent constructor
 
     // Class members can't be declared with computed values so initialization is done here
-    $this->dir = PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'skeleton/';
+    $this->dir = PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'editText/';
   }
 
   /**

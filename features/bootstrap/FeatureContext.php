@@ -7,6 +7,8 @@ use Behat\Behat\Context\ClosuredContextInterface,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
+require_once("src/plugins/userInfo/include/post_validation.class.php");
+
 //
 // Require 3rd-party libraries here:
 //
@@ -19,48 +21,29 @@ use Behat\Gherkin\Node\PyStringNode,
  */
 class FeatureContext extends BehatContext
 {
-    /**
-     * Initializes context.
-     * Every scenario gets its own context object.
-     *
-     * @param array $parameters context parameters (set them up through behat.yml)
-     */
+
+    private $fieldToValidate;
+
     public function __construct(array $parameters)
     {
-        // Initialize your context here
+        $this->fieldToValidate = "";
     }
 
-    private $output;
-
-    /** @Given /^I am in a directory "([^"]*)"$/ */
-    public function iAmInADirectory($dir)
+    /**
+     * @Given /^I have an empty field$/
+     */
+    public function iHaveAnEmptyField()
     {
-        if (!file_exists($dir)) {
-            mkdir($dir);
-        }
-        chdir($dir);
+        $this->fieldToValidate = "";
     }
 
-    /** @Given /^I have a file named "([^"]*)"$/ */
-    public function iHaveAFileNamed($file)
+    /**
+     * @When /^I run validation I should get false$/
+     */
+    public function iRunValidationIShouldGetFalse()
     {
-        touch($file);
+        $actualValue = PostValidation::isValid($this->fieldToValidate);
+        PHPUnit_Framework_Assert::assertTrue($actualValue);
     }
-
-    /** @When /^I run "([^"]*)"$/ */
-    public function iRun($command)
-    {
-        exec($command, $output);
-        $this->output = trim(implode("\n", $output));
-    }
-
-    /** @Then /^I should get:$/ */
-    public function iShouldGet(PyStringNode $string)
-    {
-        if ((string) $string !== $this->output) {
-            throw new Exception(
-                "Actual output is:\n" . $this->output
-            );
-        }
-    }
+    
 }

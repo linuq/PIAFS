@@ -37,7 +37,7 @@ class form_element_db
     }
 
     private function addFormElementInfoColumn($form_element_name, $form_element_type){
-        $dataType = $this->getElementType($form_element_type);
+        $dataType = $this->getDbType($form_element_type);
 
         $query = '
             ALTER TABLE '. $this->table .'
@@ -46,7 +46,7 @@ class form_element_db
         pwg_query($query);
     }
 
-    private function getElementType($form_element_type){
+    private function getDbType($form_element_type){
         //default type
         $dataType = 'varchar(64)';
         if($form_element_type == 'date'){
@@ -110,6 +110,14 @@ class form_element_db
             array_push($form_elements, $array_to_push);
         }
         return $form_elements;
+    }
+
+    function getElementTypeByName($form_element_name){
+        $query = '
+            SELECT form_element_type  
+            FROM '.$this->form_element_table.'
+            WHERE form_element_name = \''.$form_element_name.'\'';
+        return pwg_db_fetch_assoc(pwg_query($query));
     }
 
 }

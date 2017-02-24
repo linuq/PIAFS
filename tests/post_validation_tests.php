@@ -142,5 +142,45 @@ class PostValidationTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($actualResult);
     }
 
+    public function testIsValidDateReturnFalseIfEmptyDate(){
+        $date = "";
+
+        $actualResult = PostValidation::isValidDate($date);
+
+        $this->assertFalse($actualResult);
+    }
+
+    public function testAreValidDatesReturnTrueIfOneValidDate(){
+        $dates = ["2001-01-01"];
+
+        $actualResult = PostValidation::areValidDates($dates);
+
+        $this->assertTrue($actualResult);
+    }
+
+    public function testAreValidDatesReturnTrueIfAllValidDates(){
+        $dates = ["2001-01-01", "2001-03-06"];
+
+        $actualResult = PostValidation::areValidDates($dates);
+
+        $this->assertTrue($actualResult);
+    }
+
+    public function testAreValidDatesReturnFalseIfOneInvalidDate(){
+        $dates = ["2001-01-01", "2001-03-0"];
+
+        $actualResult = PostValidation::areValidDates($dates);
+
+        $this->assertFalse($actualResult);
+    }
+
+    public function testAreValidDatesReturnFalseIfAllInvalidDates(){
+        $dates = ["201-01-01", "2001-03-0"];
+
+        $actualResult = PostValidation::areValidDates($dates);
+
+        $this->assertFalse($actualResult);
+    }
+
 }
 ?>

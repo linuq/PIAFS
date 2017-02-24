@@ -25,11 +25,9 @@ foreach($items as $key => $value){
 //DatesToValidate
 $dates = [];
 foreach($items as $key => $value){
-  $reponse = $formElement->getElementTypeByName($key);
-  foreach($reponse as $key => $elementType){
-    if($elementType == 'date'){
-      $dates[] = $value;
-    }
+  $response = $formElement->getElementTypeByName($key);
+  if(array_values($response)[0] == 'date'){
+    $dates[] = $value;
   }
 }
 

@@ -53,6 +53,10 @@ if (defined('IN_ADMIN'))
   add_event_handler('tabsheet_before_select', 'skeleton_tabsheet_before_select',
     EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
 
+  // new tab on photos-add page
+  add_event_handler('tabsheet_before_select', 'skeleton_tabsheet_before_select_add',
+    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
+
   // new prefiler in Batch Manager
   add_event_handler('get_batch_manager_prefilters', 'skeleton_add_batch_manager_prefilters',
     EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);

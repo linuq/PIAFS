@@ -31,6 +31,22 @@ function skeleton_tabsheet_before_select($sheets, $id)
 }
 
 /**
+ * add a tab on photos_add  page
+ */
+function skeleton_tabsheet_before_select_add($sheets, $id)
+{
+  if ($id == 'photos_add')
+  {
+    $sheets['skeleton'] = array(
+      'caption' => l10n('Add txt'),
+      'url' => SKELETON_ADMIN.'-photos_add',
+      );
+  }
+
+  return $sheets;
+}
+
+/**
  * add a prefilter to the Batch Downloader
  */
 function skeleton_add_batch_manager_prefilters($prefilters)

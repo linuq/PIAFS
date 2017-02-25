@@ -58,7 +58,6 @@ $template->assign(array(
   'TITLE' => render_element_name($picture),
   'TN_SRC' => DerivativeImage::thumb_url($picture),
   'TXT' => $contents,
-  'CONFIRM' => $confirm
 ));
 
 $template->set_filename('skeleton_content', realpath(SKELETON_PATH . 'admin/template/photo.tpl'));

@@ -14,8 +14,6 @@
     <textarea name="editText" id="editText">{$TXT}</textarea>
     </p>
 
-    <p>{$CONFIRM}</p>
-
     <p>
       <input class="submit" type="submit" value="{'Save'|translate}" name="save_skeleton">
       <input type="reset" />

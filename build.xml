@@ -7,7 +7,7 @@
     <target name="build"
         depends="build-common" />
 
-    <target name="build-common" depends="prepare,composer,phpunit,behat, composer-update" />
+    <target name="build-common" depends="prepare,composer,phpunit,behat,composer-update" />
 
     <target name="clean" depends="clean-build,clean-composer" description="Cleanup build and composer artifacts" />
 
@@ -39,7 +39,7 @@
         </exec>
     </target>
 
-    <target name="composer-update" depends="composer.check" if="composer.lock.exist.in.gitignore" description="Updating dependencies">
+    <target name="composer-update" description="Updating dependencies">
         <echo>Updating dependencies</echo>
         <exec executable="composer" failonerror="true">
             <arg value="update" />

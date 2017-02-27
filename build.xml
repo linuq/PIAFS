@@ -7,7 +7,7 @@
     <target name="build"
         depends="build-common" />
 
-    <target name="build-common" depends="prepare,composer,phpunit" />
+    <target name="build-common" depends="prepare,composer,phpunit,behat" />
 
     <target name="clean" depends="clean-build,clean-composer" description="Cleanup build and composer artifacts" />
 
@@ -52,6 +52,12 @@
             <arg value="${build-dir}/phpunit.xml" />
             <arg value="--log-junit" />
             <arg value="${build-dir}/logs/junit.xml" />
+        </exec>
+    </target>
+    
+    <target name="behat" description="Run tests with Behat">
+        <exec executable="${basedir}/bin/behat" failonerror="true">
+            <arg value="features/ls.feature" />
         </exec>
     </target>
 

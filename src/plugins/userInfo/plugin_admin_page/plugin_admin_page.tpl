@@ -1,6 +1,6 @@
 {html_head}
 <link rel="stylesheet" type="text/css" href="{$USER_INFO_PATH|@cat:'plugin_admin_page/plugin_admin_style.css'}">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">">
 <script type="text/javascript" src="{$USER_INFO_PATH|@cat:'plugin_admin_page/plugin_admin_script.js'}"> </script>
 {/html_head}
 
@@ -24,8 +24,8 @@
           {foreach from=$row item=column}
             <td> {$column} </td>
           {/foreach}
-          <td> <a onclick="deleteFormElement( '{$row[0]}' )" > <i class="material-icons" > delete </i> </a> </td>
-          <td> <a onclick="editFormElement( '{$row[0]}' )" > <i class="material-icons" > edit </i> </a> </td>
+          <td> <a onclick="deleteFormElement( '{$row[0]}' )" > <i class="fa fa-trash" onclick="deleteFormElement( '{$row[0]}' )" > </i> </a> </td>
+          <!-- <td> <a onclick="editFormElement( '{$row[0]}' )" > <i class="fa fa-pencil" > edit </i> </a> </td> -->
         </tr>
     {/foreach}
   </table>
@@ -33,7 +33,7 @@
 <br>
 <form method="POST">
 
-  <div id="editForm">
+   <div id="editForm">
     <label> {"Edit element"|translate}: </label>
     <div>
       <label> {"Old element name"|translate}: </label>
@@ -53,22 +53,35 @@
       </select>
     </div>
     <button onclick="modifyFormElement()"> {'Edit'|translate} </button>
-  </div>
+  </div> 
 
   <br>
-  <label> {"Add new element to your form"|translate}: </label>
-  <div>
-    <label> {"New element name"|translate}: </label>
-    <input type="text" id="form_element_name" />
-  <div>
-  <div>
-    <label> {"New element type"|translate}: </label>
-    <select id="form_element_type">
-      <option value="text"> {"Text"|translate} </option>
-      <option value="number"> {"Number"|translate} </option>
-      <option value="date"> {"Date"|translate} </option>
-        <!-- <option value="radio_button"> {"Radio Button"|translate} </option> -->
-    </select>
+
+  <div id="newForm">
+    <label> {"Add new element to your form"|translate}: </label>
+    <div>
+      <label> {"New element name"|translate}: </label>
+      <input type="text" id="form_element_name" />
+    <div>
+    <div>
+      <label> {"New element type"|translate}: </label>
+      <select id="form_element_type" onchange="showElementsChoice()">
+        <option value="text"> {"Text"|translate} </option>
+        <option value="number"> {"Number"|translate} </option>
+        <option value="date"> {"Date"|translate} </option>
+        <option value="choice"> {"Choice"|translate} </option>
+      </select>
+    </div>
+
+    <div id="selectElementsName">
+      <label> {"Choices name"|translate}: </label>
+      <ul id="choices">
+      </ul>
+      <input type="text" id="choiceToAdd"> </input> <button type="button" onclick="addToChoiceList()"> {"Add choice"|translate} </button>
+      <br>
+    </div>
+
   </div>
+  <br>
   <button onclick="addFormElement()"> {'Add'|translate} </button>
 </form>

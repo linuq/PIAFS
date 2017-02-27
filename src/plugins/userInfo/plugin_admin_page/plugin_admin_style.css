@@ -5,3 +5,12 @@
 #editForm{
   display: none;
 }
+
+#selectElementsName{
+  padding-left: 2em;
+  display: none;
+}
+
+#choices{
+  display: none;
+}

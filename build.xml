@@ -57,7 +57,7 @@
     
     <target name="behat" description="Run tests with Behat">
         <exec executable="${basedir}/bin/behat" failonerror="true">
-            <arg value="features/ls.feature" />
+            <arg value="features/infoValidation.feature" />
         </exec>
     </target>
 

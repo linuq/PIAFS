@@ -10,6 +10,7 @@
         <div>
           <label> {$row[0]}: </label>
           <input id={$row[0]} type="{$row[1]}" class="formElement" value="{$row[2]}" />
+          {if $row[1] eq 'date'} (YYYY-MM-DD) {/if}
         </div>
         <br>
     {/foreach}

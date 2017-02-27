@@ -34,17 +34,18 @@ function deleteFormElement(formElementName){
   });
 }
 
-function modifyFormElement(formElementPreviousName, formElementName, formElementType){
+function modifyFormElement(){
     jQuery.ajax({
     type: "POST",
     url: 'plugins/userInfo/plugin_admin_page/form_element/form_element_modify.php',
     datatype: "json",
     data: {
-      form_element_previous_name: formElementPreviousName,
-      form_element_name: formElementName,
-      form_element_type: formElementType
+      form_element_previous_name: $('#old_form_element_name').val(),
+      form_element_name: $('#edit_form_element_name').val(),
+      form_element_type: $('#edit_form_element_type').val()
     },
     complete: function (response) {
+      location.reload();
       console.log(JSON.stringify(response));
     },
     error: function (response) {
@@ -53,6 +54,8 @@ function modifyFormElement(formElementPreviousName, formElementName, formElement
   });
 }
 
-function editFormElement(){
-  
+function editFormElement(formElementPreviousName){
+  $("#editForm").show();
+
+  $("#old_form_element_name").val(formElementPreviousName);
 }

@@ -7,11 +7,9 @@ use Behat\Behat\Context\ClosuredContextInterface,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
+require_once("src/plugins/userInfo/include/post_validation.class.php");
+require_once('PHPUnit/Autoload.php');
+require_once('PHPUnit/Framework/Assert/Functions.php');
 //
 
 /**
@@ -19,48 +17,198 @@ use Behat\Gherkin\Node\PyStringNode,
  */
 class FeatureContext extends BehatContext
 {
-    /**
-     * Initializes context.
-     * Every scenario gets its own context object.
-     *
-     * @param array $parameters context parameters (set them up through behat.yml)
-     */
+
+    private $fieldToValidate;
+    private $fieldsToValidate;
+    private $dateToValidate;
+    private $datesToValidate;
+
     public function __construct(array $parameters)
     {
-        // Initialize your context here
+        $this->fieldToValidate = "";
+        $this->fieldsToValidate = [];
+
+        $this->dateToValidate = "";
+        $this->datesToValidate = [];
     }
 
-    private $output;
-
-    /** @Given /^I am in a directory "([^"]*)"$/ */
-    public function iAmInADirectory($dir)
+    /**
+     * @Given /^I have an empty field$/
+     */
+    public function iHaveAnEmptyField()
     {
-        if (!file_exists($dir)) {
-            mkdir($dir);
-        }
-        chdir($dir);
+        $this->fieldToValidate = "";
     }
 
-    /** @Given /^I have a file named "([^"]*)"$/ */
-    public function iHaveAFileNamed($file)
+    /**
+     * @Given /^I have a field that is not set$/
+     */
+    public function iHaveAFieldThatIsNotSet()
     {
-        touch($file);
+        $this->fieldToValidate = null;
     }
 
-    /** @When /^I run "([^"]*)"$/ */
-    public function iRun($command)
+    /**
+     * @Given /^I have a field that is correct$/
+     */
+    public function iHaveAFieldThatIsCorrect()
     {
-        exec($command, $output);
-        $this->output = trim(implode("\n", $output));
+        $this->fieldToValidate = "Hello world";
     }
 
-    /** @Then /^I should get:$/ */
-    public function iShouldGet(PyStringNode $string)
+    /**
+     * @Given /^I have a valid date$/
+     */
+    public function iHaveAValidDate()
     {
-        if ((string) $string !== $this->output) {
-            throw new Exception(
-                "Actual output is:\n" . $this->output
-            );
-        }
+        $this->dateToValidate = "1996-08-20";
     }
+
+    /**
+     * @Given /^I have a really early date$/
+     */
+    public function iHaveAReallyEarlyDate()
+    {
+        $this->dateToValidate = "990-08-20";
+    }
+
+    /**
+     * @Given /^I have an impossible date$/
+     */
+    public function iHaveAnImpossibleDate()
+    {
+        $this->dateToValidate = "1990-02-31";
+    }
+
+    /**
+     * @Given /^I have a date with an invalid format$/
+     */
+    public function iHaveADateWithAnInvalidFormat()
+    {
+        $this->dateToValidate = "20-08-1996";
+    }
+
+    /**
+     * @Given /^I have multiple valid fields$/
+     */
+    public function iHaveMultipleValidFields()
+    {
+        $this->fieldsToValidate = ["foo", "bar"];
+    }
+
+    /**
+     * @Given /^I have multiple valid dates$/
+     */
+    public function iHaveMultipleValidDates()
+    {
+        $this->datesToValidate = ["1996-02-02", "2016-02-02"];
+    }
+
+    /**
+     * @When /^I run validation I should get false$/
+     */
+    public function iRunValidationIShouldGetFalse()
+    {
+        $actualValue = PostValidation::isValid($this->fieldToValidate);
+        PHPUnit_Framework_Assert::assertFalse($actualValue);
+    }
+
+    /**
+     * @When /^I run validation I should get true$/
+     */
+    public function iRunValidationIShouldGetTrue()
+    {
+        $actualValue = PostValidation::isValid($this->fieldToValidate);
+        PHPUnit_Framework_Assert::assertTrue($actualValue);
+    }
+
+    /**
+     * @When /^I validate all I should get true$/
+     */
+    public function iValidateAllIShouldGetTrue()
+    {
+        $actualValue = PostValidation::areValid($this->fieldsToValidate);
+        PHPUnit_Framework_Assert::assertTrue($actualValue);
+    }
+
+    /**
+     * @When /^I validate all I should get false$/
+     */
+    public function iValidateAllIShouldGetFalse()
+    {
+        $actualValue = PostValidation::areValid($this->fieldsToValidate);
+        PHPUnit_Framework_Assert::assertFalse($actualValue);
+    }
+
+    /**
+     * @Given /^one null$/
+     */
+    public function oneNull()
+    {
+        array_push($this->fieldsToValidate, null);
+    }
+
+    /**
+     * @Given /^one invalid$/
+     */
+    public function oneInvalid()
+    {
+        array_push($this->fieldsToValidate, "");
+    }
+
+
+    /**
+     * @Given /^one null date$/
+     */
+    public function oneNullDate()
+    {
+        array_push($this->datesToValidate, null);
+    }
+
+    /**
+     * @Given /^one invalid date$/
+     */
+    public function oneInvalidDate()
+    {
+        array_push($this->datesToValidate, "");
+    }
+
+
+    /**
+     * @When /^I validate date I should get true$/
+     */
+    public function iValidateDateIShouldGetTrue()
+    {
+        $actualValue = PostValidation::isValidDate($this->dateToValidate);
+        PHPUnit_Framework_Assert::assertTrue($actualValue);
+    }
+
+    /**
+     * @When /^I validate date I should get false$/
+     */
+    public function iValidateDateIShouldGetFalse()
+    {
+        $actualValue = PostValidation::isValidDate($this->dateToValidate);
+        PHPUnit_Framework_Assert::assertFalse($actualValue);
+    }
+
+    /**
+     * @When /^I validate all dates I should get true$/
+     */
+    public function iValidateAllDatesIShouldGetTrue()
+    {
+        $actualValue = PostValidation::areValidDates($this->datesToValidate);
+        PHPUnit_Framework_Assert::assertTrue($actualValue);
+    }
+
+    /**
+     * @When /^I validate all dates I should get false$/
+     */
+    public function iValidateAllDatesIShouldGetFalse()
+    {
+        $actualValue = PostValidation::areValidDates($this->datesToValidate);
+        PHPUnit_Framework_Assert::assertFalse($actualValue);
+    }
+
+    
 }

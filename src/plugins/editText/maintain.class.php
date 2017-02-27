@@ -6,26 +6,17 @@ defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
  * It must extends PluginMaintain and be named "PLUGINID_maintain"
  * where PLUGINID is the directory name of your plugin.
  */
-class skeleton_maintain extends PluginMaintain
+class editText_maintain extends PluginMaintain
 {
-  private $default_conf = array(
-    'option1' => 10,
-    'option2' => true,
-    'option3' => 'two',
-    );
 
-  private $table;
   private $dir;
 
   function __construct($plugin_id)
   {
     parent::__construct($plugin_id); // always call parent constructor
 
-    global $prefixeTable;
-
     // Class members can't be declared with computed values so initialization is done here
-    $this->table = $prefixeTable . 'skeleton';
-    $this->dir = PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'skeleton/';
+    $this->dir = PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'editText/';
   }
 
   /**
@@ -36,44 +27,6 @@ class skeleton_maintain extends PluginMaintain
    */
   function install($plugin_version, &$errors=array())
   {
-    global $conf;
-
-    // add config parameter
-    if (empty($conf['skeleton']))
-    {
-      // conf_update_param well serialize and escape array before database insertion
-      // the third parameter indicates to update $conf['skeleton'] global variable as well
-      conf_update_param('skeleton', $this->default_conf, true);
-    }
-    else
-    {
-      $old_conf = safe_unserialize($conf['skeleton']);
-
-      if (empty($old_conf['option3']))
-      { // use case: this parameter was added in a new version
-        $old_conf['option3'] = 'two';
-      }
-
-      conf_update_param('skeleton', $old_conf, true);
-    }
-
-    // add a new table
-    pwg_query('
-CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `field1` mediumint(8) DEFAULT NULL,
-  `field2` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8
-;');
-
-    // add a new column to existing table
-    $result = pwg_query('SHOW COLUMNS FROM `'.IMAGES_TABLE.'` LIKE "skeleton";');
-    if (!pwg_db_num_rows($result))
-    {
-      pwg_query('ALTER TABLE `' . IMAGES_TABLE . '` ADD `editText` TINYINT(1) NOT NULL DEFAULT 0;');
-    }
-
     // create a local directory
     if (!file_exists($this->dir))
     {
@@ -122,15 +75,6 @@ CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
    */
   function uninstall()
   {
-    // delete configuration
-    conf_delete_param('skeleton');
-
-    // delete table
-    pwg_query('DROP TABLE `'. $this->table .'`;');
-
-    // delete field
-    pwg_query('ALTER TABLE `'. IMAGES_TABLE .'` DROP `skeleton`;');
-
     // delete local folder
     // use a recursive function if you plan to have nested directories
     foreach (scandir($this->dir) as $file)

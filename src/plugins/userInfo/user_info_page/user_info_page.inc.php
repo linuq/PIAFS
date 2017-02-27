@@ -1,8 +1,8 @@
 <?php
 defined('USER_INFO_PATH') or die('Hacking attempt!');
 
-include_once("user_info_db.php");
-include_once(USER_INFO_PATH."/plugin_admin_page/form_element/form_element_db.php");
+include_once(USER_INFO_PATH."/include/user_info_db.php");
+include_once(USER_INFO_PATH."/include/form_element_db.php");
 
 global $page, $template, $conf, $user, $tokens, $pwg_loaded_plugins, $prefixeTable;
 

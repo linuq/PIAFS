@@ -25,13 +25,37 @@
             <td> {$column} </td>
           {/foreach}
           <td> <a onclick="deleteFormElement( '{$row[0]}' )" > <i class="material-icons" > delete </i> </a> </td>
-          <!-- <td> <a onclick="editFormElement()" > <i class="material-icons" > edit </i> </a> </td> -->
+          <td> <a onclick="editFormElement( '{$row[0]}' )" > <i class="material-icons" > edit </i> </a> </td>
         </tr>
     {/foreach}
   </table>
 </div>
 <br>
 <form method="POST">
+
+  <div id="editForm">
+    <label> {"Edit element"|translate}: </label>
+    <div>
+      <label> {"Old element name"|translate}: </label>
+      <input type="text" id="old_form_element_name" disabled/>
+    </div>
+    <div>
+      <label> {"New element name"|translate}: </label>
+      <input type="text" id="edit_form_element_name" />
+    </div>
+    <div>
+      <label> {"New element type"|translate}: </label>
+      <select id="edit_form_element_type">
+        <option value="text"> {"Text"|translate} </option>
+        <option value="number"> {"Number"|translate} </option>
+        <option value="date"> {"Date"|translate} </option>
+        <!-- <option value="radio_button"> {"Radio Button"|translate} </option> -->
+      </select>
+    </div>
+    <button onclick="modifyFormElement()"> {'Edit'|translate} </button>
+  </div>
+
+  <br>
   <label> {"Add new element to your form"|translate}: </label>
   <div>
     <label> {"New element name"|translate}: </label>
@@ -42,8 +66,8 @@
     <select id="form_element_type">
       <option value="text"> {"Text"|translate} </option>
       <option value="number"> {"Number"|translate} </option>
-      <option value="checkbox"> {"Checkbox"|translate} </option>
-      <option value="radio_button"> {"Radio Button"|translate} </option>
+      <option value="date"> {"Date"|translate} </option>
+        <!-- <option value="radio_button"> {"Radio Button"|translate} </option> -->
     </select>
   </div>
   <button onclick="addFormElement()"> {'Add'|translate} </button>

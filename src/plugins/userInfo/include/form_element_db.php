@@ -25,7 +25,7 @@ class form_element_db
     function addFormElement($form_element_name, $form_element_type){
         $this->insertFormElement($form_element_name, $form_element_type);
 
-        $this->alterFormElementInfoTable($form_element_name);
+        $this->addFormElementInfoColumn($form_element_name, $form_element_type);
     }
 
     private function insertFormElement($form_element_name, $form_element_type){
@@ -36,12 +36,23 @@ class form_element_db
         pwg_query($query);
     }
 
-    private function alterFormElementInfoTable($form_element_name){
+    private function addFormElementInfoColumn($form_element_name, $form_element_type){
+        $dataType = $this->getDbType($form_element_type);
+
         $query = '
             ALTER TABLE '. $this->table .'
-            ADD COLUMN ' . $form_element_name .' varchar(64) DEFAULT NULL
+            ADD COLUMN ' . $form_element_name .' '. $dataType .' DEFAULT NULL
         ';
         pwg_query($query);
+    }
+
+    private function getDbType($form_element_type){
+        //default type
+        $dataType = 'varchar(64)';
+        if($form_element_type == 'date'){
+            $dataType = 'date';
+        }
+        return $dataType;
     }
 
     function deleteFormElement($form_element_name){
@@ -67,13 +78,26 @@ class form_element_db
     }
 
     function modifyFormElement($form_element_previous_name, $form_element_name, $form_element_type){
+        $this->updateFormElement($form_element_previous_name, $form_element_name, $form_element_type);
+
+        $this->changeColumnName($form_element_previous_name, $form_element_name, $form_element_type);
+    }
+
+    private function updateFormElement($form_element_previous_name, $form_element_name, $form_element_type){
         $query = '
             UPDATE '.$this->form_element_table.'
-                SET form_element_name = '.$form_element_name.',
-                    form_element_type = '.$form_element_type.'
-                WHERE form_element_name = '.$form_element_previous_name.'
+                SET form_element_name = \''.$form_element_name.'\',
+                    form_element_type = \''.$form_element_type.'\'
+                WHERE form_element_name = \''.$form_element_previous_name.'\'
             ';
         pwg_query($query);
+    }
+
+    private function changeColumnName($form_element_previous_name, $form_element_name, $form_element_type){
+        //Drop the column so previous data type wont cause any problem
+        $this->dropFormElementInfoColumn($form_element_previous_name);
+
+        $this->addFormElementInfoColumn($form_element_name, $form_element_type);
     }
 
     private function makeArrayOfFormElements($queryResult){
@@ -86,6 +110,14 @@ class form_element_db
             array_push($form_elements, $array_to_push);
         }
         return $form_elements;
+    }
+
+    function getElementTypeByName($form_element_name){
+        $query = '
+            SELECT form_element_type  
+            FROM '.$this->form_element_table.'
+            WHERE form_element_name = \''.$form_element_name.'\'';
+        return pwg_db_fetch_assoc(pwg_query($query));
     }
 
 }

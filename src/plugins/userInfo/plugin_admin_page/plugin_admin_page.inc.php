@@ -3,7 +3,7 @@
 //Check whether we are indeed included by Piwigo
 if(!defined('PHPWG_ROOT_PATH')) die ('Hacking attempt!');
 
-include("form_element/form_element_db.php");
+include_once(USER_INFO_PATH."/include/form_element_db.php");
 
 //Fetch the template.
 global $template;

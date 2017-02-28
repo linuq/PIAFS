@@ -1,5 +1,7 @@
 <?php
 
+include_once(PHPWG_ROOT_PATH."plugins/userInfo/include/form_element_db.php");
+
 class PostValidation
 {
 
@@ -39,6 +41,27 @@ class PostValidation
             return false;
         }
         return true;
+    }
+
+    static function optionsExist($items){
+        $formElement = new form_element_db();
+        foreach($items as $key => $value){
+            $response = $formElement->getElementTypeByName($key);
+            if(array_values($response)[0] == 'choice'){
+                $formOptions = $formElement->getFormOptionsByName($key);
+                if(!(self::optionExist($formOptions, $value))){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    static function optionExist($formOptions, $value){
+        if (strpos(array_values($formOptions)[0], $value) !== false) {
+            return true;
+        }
+        return false;
     }
 
 }

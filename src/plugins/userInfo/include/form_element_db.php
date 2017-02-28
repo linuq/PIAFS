@@ -133,8 +133,12 @@ class form_element_db
         return pwg_db_fetch_assoc(pwg_query($query));
     }
 
-    function getFormOptions(){
-
+    function getFormOptionsByName($form_element_name){
+        $query = '
+            SELECT form_element_choices  
+            FROM '.$this->form_element_table.'
+            WHERE form_element_name = \''.$form_element_name.'\'';
+        return pwg_db_fetch_assoc(pwg_query($query));
     }
 
 }

@@ -1,0 +1,24 @@
+#info_fields{
+  padding: 50px;
+}
+
+#editForm{
+  display: none;
+}
+
+#selectElementsName{
+  padding-left: 2em;
+  display: none;
+}
+
+#choices{
+  display: none;
+}
+
+#errorForm{
+  display:none;
+}
+
+.errorText{
+  color: red;
+}

@@ -54,7 +54,7 @@ class form_element_db
 
         $query = '
             ALTER TABLE '. $this->table .'
-            ADD COLUMN ' . $form_element_name .' '. $dataType .' DEFAULT NULL
+            ADD COLUMN `' . $form_element_name .'` '. $dataType .' DEFAULT NULL
         ';
         pwg_query($query);
     }

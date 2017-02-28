@@ -47,9 +47,9 @@ class user_info_db
     }
 
     private function getColumnNames($items){
-        $columns = "id, ";
+        $columns = "id, `";
         foreach($items as $key => $value){
-            $columns .= $key . ", ";
+            $columns .= $key . "`, ";
         }
         return rtrim($columns, ", ");
     }
@@ -77,7 +77,7 @@ class user_info_db
     private function getInfoToUpdate($items){
         $infoToUpdate = "";
         foreach($items as $key => $value){
-            $infoToUpdate .= $key . " = '" . $value . "', ";
+            $infoToUpdate .= "`". $key . "` = '" . $value . "', ";
         }
         return rtrim($infoToUpdate, ", ");
     }

@@ -5,6 +5,7 @@ function sendUserInfo(){
 
   $(".formElement").map(function (){
     formElements[$(this).attr("id")] = $(this).val();
+    console.log($(this).val());
   });
 
   //Call the function to modify

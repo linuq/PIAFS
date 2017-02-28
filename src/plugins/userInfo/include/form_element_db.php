@@ -22,18 +22,31 @@ class form_element_db
         return $this->makeArrayOfFormElements($queryResult);
     }
 
-    function addFormElement($form_element_name, $form_element_type){
-        $this->insertFormElement($form_element_name, $form_element_type);
+    function addFormElement($form_element_name, $form_element_type, $choices){
+        $this->insertFormElement($form_element_name, $form_element_type, $choices);
 
         $this->addFormElementInfoColumn($form_element_name, $form_element_type);
     }
 
-    private function insertFormElement($form_element_name, $form_element_type){
+    private function insertFormElement($form_element_name, $form_element_type, $choices){
+
+        $choicesString = $this->getChoicesString($choices);
+
         $query = '
-            INSERT INTO '. $this->form_element_table.'(form_element_name, form_element_type) 
-            VALUES (\''.$form_element_name.'\', \''.$form_element_type.'\')
+            INSERT INTO '. $this->form_element_table.'(form_element_name, form_element_type, form_element_choices) 
+            VALUES (\''.$form_element_name.'\', \''.$form_element_type.'\', \''.$choicesString.'\')
         ;';
         pwg_query($query);
+    }
+
+    private function getChoicesString($choices){
+        $choicesString = "";
+        foreach($choices as $choice){
+            $choicesString .= $choice. ",";
+        }
+        $choicesString = rtrim($choicesString, ", ");
+        $choicesString .= "";
+        return $choicesString;
     }
 
     private function addFormElementInfoColumn($form_element_name, $form_element_type){
@@ -41,7 +54,7 @@ class form_element_db
 
         $query = '
             ALTER TABLE '. $this->table .'
-            ADD COLUMN ' . $form_element_name .' '. $dataType .' DEFAULT NULL
+            ADD COLUMN `' . $form_element_name .'` '. $dataType .' DEFAULT NULL
         ';
         pwg_query($query);
     }
@@ -115,6 +128,14 @@ class form_element_db
     function getElementTypeByName($form_element_name){
         $query = '
             SELECT form_element_type  
+            FROM '.$this->form_element_table.'
+            WHERE form_element_name = \''.$form_element_name.'\'';
+        return pwg_db_fetch_assoc(pwg_query($query));
+    }
+
+    function getFormOptionsByName($form_element_name){
+        $query = '
+            SELECT form_element_choices  
             FROM '.$this->form_element_table.'
             WHERE form_element_name = \''.$form_element_name.'\'';
         return pwg_db_fetch_assoc(pwg_query($query));

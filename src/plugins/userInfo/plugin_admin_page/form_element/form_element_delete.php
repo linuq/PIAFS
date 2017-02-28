@@ -19,5 +19,8 @@ if(PostValidation::areValid($items)){
     $form_element_db = new form_element_db();
     $form_element_db->deleteFormElement($_POST["form_element_name"]);
 }
+else{
+  die(header("HTTP/1.0 400 Bad Request"));
+}
 
 ?>

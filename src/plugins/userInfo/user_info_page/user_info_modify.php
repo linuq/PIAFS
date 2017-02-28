@@ -22,7 +22,7 @@ foreach($items as $key => $value){
   $values[] = $value;
 }
 
-//DatesToValidate
+//Dates to validate
 $dates = [];
 foreach($items as $key => $value){
   $response = $formElement->getElementTypeByName($key);
@@ -32,7 +32,7 @@ foreach($items as $key => $value){
 }
 
 //check if all POST values are valid
-if(PostValidation::areValid($values) && PostValidation::areValidDates($dates)){
+if(PostValidation::areValid($values) && PostValidation::areValidDates($dates) && PostValidation::optionsExist($items)){
 
   //insert if everything is valid
   if(!($userInfo->userInfoExists($user['id']))){
@@ -42,6 +42,9 @@ if(PostValidation::areValid($values) && PostValidation::areValidDates($dates)){
     $userInfo->modifyInfo($user['id'], $items);
   }
   
+}
+else{
+  die(header("HTTP/1.0 400 Bad Request"));
 }
 
 ?>

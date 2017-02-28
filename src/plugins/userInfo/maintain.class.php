@@ -57,6 +57,7 @@ class userInfo_maintain extends PluginMaintain
     CREATE TABLE IF NOT EXISTS `". $this->formElementTable ."` (
       form_element_name varchar(64) NOT NULL default '',
       form_element_type varchar(64) DEFAULT NULL,
+      form_element_choices varchar(64) DEFAULT NULL,
       PRIMARY KEY (`form_element_name`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8
     ;");

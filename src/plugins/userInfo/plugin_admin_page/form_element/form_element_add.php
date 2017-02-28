@@ -15,11 +15,19 @@ foreach($_POST as $key => $value){
   $items[] = $value;
 }
 
-if(PostValidation::areValid($items)){
-    $form_element_db = new form_element_db();
-    $form_element_db->addFormElement($_POST["form_element_name"], $_POST["form_element_type"]);
+$choices = [];
+if(isset($_POST["form_element_choices"])){
+  foreach($_POST["form_element_choices"] as $choice){
+    $choices[] = $choice;
+  }
 }
 
-
+if(PostValidation::areValid($items)){
+    $form_element_db = new form_element_db();
+    $form_element_db->addFormElement($_POST["form_element_name"], $_POST["form_element_type"], $choices);
+}
+else{
+  die(header("HTTP/1.0 400 Bad Request"));
+}
 
 ?>

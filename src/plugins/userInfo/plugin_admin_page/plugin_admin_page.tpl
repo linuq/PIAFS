@@ -18,6 +18,7 @@
     <tr>
       <th> {"Form element name"|translate} </th>
       <th> {"Form element type"|translate} </th>
+      <th> {"Form element options"|translate} </th>
     </tr>
     {foreach from=$FORM_ELEMENTS item=row}
         <tr>

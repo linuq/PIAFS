@@ -14,21 +14,32 @@ $form_elements = $form_element_db->getAllFormElements();
 $userInfo = new user_info_db();
 $queryResult = $userInfo->getUserInfo($user['id']);
 
+
+//$form_elements
+//0: Field names
+//1: Field type
+//2: Field options
+//3: Field value
+
 //Add form info to form elements
 if(!empty($queryResult)){
   for($i =0; $i < count($form_elements); $i++){
     foreach($queryResult as $key => $value){
       if($form_elements[$i][0] == $key){
-        $form_elements[$i][2] = $value;
+        $form_elements[$i][3] = $value;
       }
     }
   }
 }
 
+//Get all options for select fields
+for($i =0; $i < count($form_elements); $i++){
+  if($form_elements[$i][1] == "choice"){
+    $form_elements[$i][2] = explode(',', $form_elements[$i][2]);
+  }
+}
+
 $template->assign(array(
-  // this is useful when having big blocks of text which must be translated
-  // prefer separated HTML files over big lang.php files
-  'INTRO_CONTENT' => load_language('intro.html', USER_INFO_PATH, array('return'=>true)),
   'USER_INFO_PATH' => USER_INFO_PATH,
   'USER_INFO_ABS_PATH' => realpath(USER_INFO_PATH).'/',
   'FORM_ELEMENTS' => $form_elements

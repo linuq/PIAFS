@@ -106,6 +106,9 @@ function showElementsChoice(){
   if($("#form_element_type").val() == 'choice'){
     $("#selectElementsName").show();
   }
+  else{
+    $("#selectElementsName").hide();
+  }
 }
 
 function addToChoiceList(){

@@ -24,7 +24,7 @@ if(isset($_POST["form_element_choices"])){
 
 if(PostValidation::areValid($items)){
     $form_element_db = new form_element_db();
-    $form_element_db->addFormElement($_POST["form_element_name"], $_POST["form_element_type"]);
+    $form_element_db->addFormElement($_POST["form_element_name"], $_POST["form_element_type"], $choices);
 }
 
 ?>

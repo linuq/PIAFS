@@ -4,6 +4,9 @@
 {/html_head}
 
 <h1>{'User information'|translate}</h1>
+<div id="errorForm">
+  <p class="errorText"> There was an error processing your request. </p>
+</div>
 <div id="userInfoForm">
   <form class="userInfo">
     {foreach from=$FORM_ELEMENTS item=row}
@@ -23,6 +26,6 @@
         <br>
     {/foreach}
     <br>
-    <button onclick="sendUserInfo()"> {'Save'|translate} </button>
+    <button type="button" onclick="sendUserInfo()"> {'Save'|translate} </button>
   </form>
 </div>

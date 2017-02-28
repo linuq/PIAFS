@@ -14,3 +14,11 @@
 #choices{
   display: none;
 }
+
+#errorForm{
+  display:none;
+}
+
+.errorText{
+  color: red;
+}

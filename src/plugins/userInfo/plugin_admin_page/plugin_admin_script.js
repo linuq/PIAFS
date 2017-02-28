@@ -23,11 +23,11 @@ function addFormElementWithChoices(choices){
       form_element_type: $('#form_element_type').val(),
       form_element_choices: choices
     },
-    complete: function (response) {
+    success: function (response) {
       console.log(JSON.stringify(response));
     },
     error: function (response) {
-      console.log(response);
+      $("#errorForm").show();
     }
   });  
 }
@@ -41,11 +41,11 @@ function addFormElementWithoutChoices(){
       form_element_name: $('#form_element_name').val(),
       form_element_type: $('#form_element_type').val()
     },
-    complete: function (response) {
+    success: function (response) {
       console.log(JSON.stringify(response));
     },
     error: function (response) {
-      console.log(response);
+      $("#errorForm").show();
     }
   });  
 }
@@ -58,12 +58,12 @@ function deleteFormElement(formElementName){
     data: {
       form_element_name: formElementName
     },
-    complete: function (response) {
+    success: function (response) {
       console.log(JSON.stringify(response));
       location.reload();
     },
     error: function (response) {
-      console.log(response);
+      $("#errorForm").show();
     }
   });
 }

@@ -13,6 +13,9 @@
 <fieldset>
  <legend>{'List of the elements in the form'|@translate}</legend>
 </fieldset>
+<div id="errorForm">
+  <p class="errorText"> There was an error processing your request. </p>
+</div>
 <div>
   <table border="1">
     <tr>
@@ -84,5 +87,5 @@
 
   </div>
   <br>
-  <button onclick="addFormElement()"> {'Add'|translate} </button>
+  <button type="button" onclick="addFormElement()"> {'Add'|translate} </button>
 </form>

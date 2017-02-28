@@ -55,3 +55,11 @@ button {
      between the labels and their text fields */
   margin-left: .5em;
 }
+
+#errorForm{
+  display:none;
+}
+
+.errorText{
+  color: red;
+}

@@ -43,5 +43,8 @@ if(PostValidation::areValid($values) && PostValidation::areValidDates($dates) &&
   }
   
 }
+else{
+  die(header("HTTP/1.0 400 Bad Request"));
+}
 
 ?>

@@ -5,7 +5,6 @@ function sendUserInfo(){
 
   $(".formElement").map(function (){
     formElements[$(this).attr("id")] = $(this).val();
-    console.log($(this).val());
   });
 
   //Call the function to modify
@@ -16,12 +15,12 @@ function sendUserInfo(){
     data: {
       form_elements : formElements
     },
-    complete: function (response) {
+    success: function (response) {
       console.log(JSON.stringify(response));
       location.reload();
     },
     error: function (response) {
-      console.log(response);
+      $("#errorForm").show();
     }
   });
 }

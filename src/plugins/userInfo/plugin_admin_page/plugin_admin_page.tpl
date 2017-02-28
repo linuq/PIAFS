@@ -36,8 +36,7 @@
 </div>
 <br>
 <form method="POST">
-
-   <div id="editForm">
+  <div id="editForm">
     <label> {"Edit element"|translate}: </label>
     <div>
       <label> {"Old element name"|translate}: </label>
@@ -84,7 +83,6 @@
       <input type="text" id="choiceToAdd"> </input> <button type="button" onclick="addToChoiceList()"> {"Add choice"|translate} </button>
       <br>
     </div>
-
   </div>
   <br>
   <button type="button" onclick="addFormElement()"> {'Add'|translate} </button>

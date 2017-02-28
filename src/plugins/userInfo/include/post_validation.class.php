@@ -63,5 +63,4 @@ class PostValidation
         }
         return false;
     }
-
 }

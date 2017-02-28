@@ -8,8 +8,7 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 require_once("src/plugins/userInfo/include/post_validation.class.php");
-require_once('PHPUnit/Autoload.php');
-require_once('PHPUnit/Framework/Assert/Functions.php');
+require_once './vendor/autoload.php';
 //
 
 /**

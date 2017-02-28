@@ -121,3 +121,9 @@ function addToChoiceList(){
 function deleteChoice(choiceName){
   $('#choice'+choiceName).remove();
 }
+
+function editFormElement(formElementPreviousName){
+  $("#editForm").show();
+
+  $("#old_form_element_name").val(formElementPreviousName);
+}

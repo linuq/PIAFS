@@ -1,8 +1,10 @@
 <?php
-defined('SKELETON_PATH') or die('Hacking attempt!');
+defined('EDIT_TEXT_PATH') or die('Hacking attempt!');
+
+include_once(EDIT_TEXT_PATH.'admin/photo_db.php');
 
 // +-----------------------------------------------------------------------+
-// | Photo[Skeleton] tab                                                   |
+// | Photo[EditText] tab                                                   |
 // +-----------------------------------------------------------------------+
 
 $page['active_menu'] = get_active_menu('photo'); // force oppening "Photos" menu block
@@ -13,7 +15,6 @@ check_status(ACCESS_ADMINISTRATOR);
 check_input_parameter('image_id', $_GET, false, PATTERN_ID);
 
 $admin_photo_base_url = get_root_url().'admin.php?page=photo-'.$_GET['image_id'];
-$self_url = SKELETON_ADMIN.'-photo&amp;image_id='.$_GET['image_id'];
 
 
 /* Tabs */
@@ -22,37 +23,18 @@ $self_url = SKELETON_ADMIN.'-photo&amp;image_id='.$_GET['image_id'];
 include_once(PHPWG_ROOT_PATH.'admin/include/tabsheet.class.php');
 $tabsheet = new tabsheet();
 $tabsheet->set_id('photo'); // <= don't forget tabsheet id
-$tabsheet->select('skeleton');
+$tabsheet->select('editText');
 $tabsheet->assign();
 
-
-/* Initialisation */
-$query = '
-SELECT *
-  FROM '.IMAGES_TABLE.'
-  WHERE id = '.$_GET['image_id'].'
-;';
-$picture = pwg_db_fetch_assoc(pwg_query($query));
-
-# DO SOME STUFF HERE... or not !
-$results = array_values($picture);
-
-$path = $results[15];
-
-if(isset($_POST['editText'])){
- $slash = stripslashes($_POST['editText']);
- file_put_contents($path, $_POST['editText']);
-}
-
-$contents = file_get_contents($path);
+$photo_db = new photo_db();
+$picture = $photo_db->getPicture($_GET['image_id']);
+$contents = $photo_db->getFileContents($picture);
 
 /* Template */
 $template->assign(array(
-  'F_ACTION' => $self_url,
-  'skeleton' => $conf['skeleton'],
   'TITLE' => render_element_name($picture),
   'TN_SRC' => DerivativeImage::thumb_url($picture),
   'TXT' => $contents
 ));
 
-$template->set_filename('skeleton_content', realpath(SKELETON_PATH . 'admin/template/photo.tpl'));
+$template->set_filename('edit_text_content', realpath(EDIT_TEXT_PATH . 'admin/photo.tpl'));

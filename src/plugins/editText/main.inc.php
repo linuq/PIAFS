@@ -45,6 +45,10 @@ if (defined('IN_ADMIN'))
   // new tab on photo page
   add_event_handler('tabsheet_before_select', 'edit_text_tabsheet_before_select',
     EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
+
+    // new tab on photos-add page
+  add_event_handler('tabsheet_before_select', 'create_text_tabsheet_before_select_add',
+    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
 }
 
 function edit_text_init()

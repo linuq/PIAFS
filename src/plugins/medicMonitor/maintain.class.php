@@ -20,8 +20,7 @@ class medicMonitor_maintain extends PluginMaintain
     global $prefixeTable;
 
     // Class members can't be declared with computed values so initialization is done here
-    $this->table = $prefixeTable . 'medic_monitor_info';
-    $this->medicMonitorTable = $prefixeTable . 'medic_monitor';
+    $this->table = $prefixeTable . 'medic_monitor';
     $this->historyTable = $prefixeTable . 'history';
     $this->dir = PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'medicMonitor/';
   }
@@ -36,8 +35,6 @@ class medicMonitor_maintain extends PluginMaintain
   {
     $this->addPluginTable();
 
-    $this->addMedicMonitorTable();
-
     $this->alterHistoryTable();
   
     $this->createLocalDirectory();
@@ -47,18 +44,10 @@ class medicMonitor_maintain extends PluginMaintain
     pwg_query('
     CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
       `id` int(11) unsigned NOT NULL,
-      PRIMARY KEY (`id`)
+      `date` DATETIME NOT NULL, 
+      PRIMARY KEY (`id`, `date`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8
     ;');
-  }
-
-  private function addMedicMonitorTable(){
-    pwg_query("
-    CREATE TABLE IF NOT EXISTS `". $this->medicMonitorTable ."` (
-      medic_monitor_name varchar(64) NOT NULL default '',
-      PRIMARY KEY (`medic_monitor_name`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8
-    ;");
   }
 
   private function alterHistoryTable(){
@@ -115,19 +104,12 @@ class medicMonitor_maintain extends PluginMaintain
   {
     $this->dropPluginTable();
 
-    $this->dropaddMedicMonitorTable();
-
     $this->deleteLocalFolder();
   }
 
   private function dropPluginTable(){
     // delete table
     pwg_query('DROP TABLE `'. $this->table .'`;');
-  }
-
-  private function dropaddMedicMonitorTable(){
-        // delete table
-    pwg_query('DROP TABLE `'. $this->medicMonitorTable .'`;');
   }
 
   private function deleteLocalFolder(){

@@ -25,7 +25,7 @@ input, textarea {
   font: 1em sans-serif;
 
   /* To give the same size to all text fields */
-  width: 300px;
+  width: 100px;
   box-sizing: border-box;
 
   /* To harmonize the look & feel of text field border */

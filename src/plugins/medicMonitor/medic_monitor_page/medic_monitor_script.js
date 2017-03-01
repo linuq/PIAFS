@@ -1,18 +1,18 @@
 function saveNewInfo(){
 
   //Get form elements
-  var formElements = {};
+  var dataToInsert = {};
   $(".newInfo").map(function (){
-    formElements[$(this).attr("id")] = $(this).val();
+    dataToInsert[$(this).attr("id")] = $(this).val();
   });
 
   //Call the function to modify
   jQuery.ajax({
     type: "POST",
-    url: 'plugins/medicMonitor/medic_monitor_page.php',
+    url: 'plugins/medicMonitor/medic_monitor_page/medic_monitor_page.php',
     datatype: "json",
     data: {
-      form_elements : formElements
+      data : dataToInsert
     },
     success: function (response) {
       console.log(JSON.stringify(response));

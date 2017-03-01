@@ -44,7 +44,7 @@ class medicMonitor_maintain extends PluginMaintain
     pwg_query('
     CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
       `id` int(11) unsigned NOT NULL,
-      `date` DATETIME NOT NULL, 
+      `date` DATETIME NOT NULL DEFAULT NOW(), 
       PRIMARY KEY (`id`, `date`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8
     ;');

@@ -12,11 +12,13 @@ $queryResult = $medic_monitor_db->getColumnNames();
 $columns = [];
 foreach($queryResult as $index => $row){
     foreach($row as $columnName){
-        $columns[] = $columnName;
+        if($columnName != "id"){
+            $columns[] = $columnName;
+        }
     }
 }
 
-$data= [["yesterday", 2, 7], ["today", 4, 7]];
+$data = $medic_monitor_db->getAllDataByUser($user["id"]);
 
 $template->assign(array(
   'MEDIC_MONITOR_PATH' => MEDIC_MONITOR_PATH,

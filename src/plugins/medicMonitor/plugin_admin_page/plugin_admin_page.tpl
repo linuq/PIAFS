@@ -20,7 +20,7 @@
 <div>
   <table border="1">
     <tr>
-      <th> {"Form element name"|translate} </th>
+      <th> {"Columns name"|translate} </th>
     </tr>
     {foreach from=$COLUMNS item=columnName}
       <tr>

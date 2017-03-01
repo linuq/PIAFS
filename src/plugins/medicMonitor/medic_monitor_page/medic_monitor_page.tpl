@@ -32,9 +32,14 @@
       {/foreach}
       <tr>
         {foreach from=$COLUMNS item="columnName"}
-          <td>
-            <input type="text" class="newInfo" id="input{$columnName}"> </input>
-          </td>
+          {if $columnName != 'date'}
+            <td>
+              <input type="text" class="newInfo" id="{$columnName}"> </input>
+            </td>
+          {else}
+            <td>
+            </td>
+          {/if}
         {/foreach}
         <td>
           <button type="button" onclick="saveNewInfo()"> {'Add'|translate} </button>

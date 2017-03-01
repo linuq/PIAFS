@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: craeteText
+Plugin Name: createText
 Version: 2.7.0
 Description: This is not a plugin. It's a createText for future plugins.
 Plugin URI: http://piwigo.org/ext/extension_view.php?eid=543

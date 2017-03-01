@@ -1,4 +1,4 @@
-{combine_css path=$SKELETON_PATH|@cat:"admin/style.css"}
+{combine_css path=$CREATE_TEXT_PATH|@cat:"admin/style.css"}
 
 {combine_script id='common' load='footer' path='admin/themes/default/js/common.js'}
 

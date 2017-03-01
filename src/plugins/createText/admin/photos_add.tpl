@@ -251,7 +251,7 @@ jQuery(document).ready(function(){
 
       <p><textarea name="createTxt" id="createTxt" placeholder="Contenu"></textarea></p>
 
-      <p><input class="submit" type="submit" value="{'Publier'|translate}" name="save_skeleton"></p>
+      <p><input class="submit" type="submit" value="{'Publier'|translate}" name="save_createText"></p>
       <input type="hidden" name="form">
     </fieldset>
 

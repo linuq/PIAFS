@@ -40,7 +40,8 @@ class medic_monitor_db
         pwg_query($query);
 
         $query="EXECUTE stmt1";
-        return pwg_query($query);
+        $queryResult = pwg_query($query);
+        return $this->makeArrayOfFormElements($queryResult);
     }
 
     function addColumn($column_name){
@@ -67,6 +68,16 @@ class medic_monitor_db
             INSERT INTO '. $this->table.'('.$columns.') 
             VALUES ('.$values.')
         ;';
+
+        pwg_query($query);
+    }
+
+    function deleteData($userId, $date){
+        $query = '
+            DELETE FROM '.$this->table.'
+            WHERE id = \''.$userId.'\'
+                AND date = \''.$date.'\'
+        ';
 
         pwg_query($query);
     }

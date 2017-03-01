@@ -31,6 +31,14 @@ class medic_monitor_db
         pwg_query($query);
     }
 
+    function dropColumn($column_name){
+        $query = '
+            ALTER TABLE '. $this->table .'
+            DROP COLUMN ' . $column_name .'
+        ';
+        pwg_query($query);
+    }
+
 }
 
 ?>

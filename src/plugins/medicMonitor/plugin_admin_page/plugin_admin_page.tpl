@@ -27,6 +27,9 @@
         <td>
           {$columnName}
         </td>
+        <td>
+          <a onclick="deleteColumn('{$columnName}')" > <i class="fa fa-trash"> </i> </a>
+        </td>
       </tr>
     {/foreach}
   </table>

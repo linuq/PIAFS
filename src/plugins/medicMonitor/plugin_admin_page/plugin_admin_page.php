@@ -12,6 +12,14 @@ include_once(PHPWG_ROOT_PATH.'plugins/medicMonitor/include/medic_monitor_db.php'
 
 $medic_monitor_db = new medic_monitor_db();
 
-$medic_monitor_db->addColumn($_POST["column_name"]);
+if(isset($_POST["column_name"])){
+    $medic_monitor_db->addColumn($_POST["column_name"]);
+}
+elseif(isset($_POST["column_to_delete"])){
+    $medic_monitor_db->dropColumn($_POST["column_to_delete"]);
+}
+else{
+    die(header("HTTP/1.0 400 Bad Request"));
+}
 
 ?>

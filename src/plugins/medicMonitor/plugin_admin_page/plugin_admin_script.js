@@ -8,6 +8,7 @@ function addColumn(){
     },
     success: function (response) {
       console.log(JSON.stringify(response));
+      location.reload();
     },
     error: function (response) {
       $("#errorForm").show();
@@ -15,13 +16,13 @@ function addColumn(){
   });  
 }
 
-/*function deleteFormElement(formElementName){
+function deleteColumn(columnName){
     jQuery.ajax({
     type: "POST",
-    url: 'plugins/medic_monitor/plugin_admin_page/plugin_admin_page.php',
+    url: 'plugins/medicMonitor/plugin_admin_page/plugin_admin_page.php',
     datatype: "json",
     data: {
-      form_element_name: formElementName
+      column_to_delete: columnName
     },
     success: function (response) {
       console.log(JSON.stringify(response));
@@ -31,4 +32,4 @@ function addColumn(){
       $("#errorForm").show();
     }
   });
-}*/
+}

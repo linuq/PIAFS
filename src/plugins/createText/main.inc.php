@@ -56,7 +56,4 @@ function create_text_init()
 
   // load plugin language file
   load_language('plugin.lang', CREATE_TEXT_PATH);
-
-  // prepare plugin configuration
-  $conf['createText'] = safe_unserialize($conf['createText']);
 }

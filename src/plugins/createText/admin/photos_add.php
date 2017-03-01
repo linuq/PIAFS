@@ -1,11 +1,11 @@
 <?php
-defined('SKELETON_PATH') or die('Hacking attempt!');
+defined('CREATE_TEXT_PATH') or die('Hacking attempt!');
 
 // +-----------------------------------------------------------------------+
-// | Photo[Skeleton] tab                                                   |
+// | Photo[createText] tab                                                   |
 // +-----------------------------------------------------------------------+
 
-include_once(SKELETON_PATH.'/include/functions_upload.inc.php');
+include_once(CREATE_TEXT_PATH.'/include/functions_upload.inc.php');
 
 define(
   'PHOTOS_ADD_BASE_URL',
@@ -17,7 +17,7 @@ $page['active_menu'] = get_active_menu('photo'); // force oppening "Photos" menu
 /* Basic checks */
 check_status(ACCESS_ADMINISTRATOR);
 
-$self_url = SKELETON_ADMIN.'-photos_add';
+$self_url = CREATE_TEXT_ADMIN.'-photos_add';
 
 /* Tabs */
 // when adding a tab to an existing tabsheet you MUST reproduce the core tabsheet code
@@ -25,7 +25,7 @@ $self_url = SKELETON_ADMIN.'-photos_add';
 include_once(PHPWG_ROOT_PATH.'admin/include/tabsheet.class.php');
 $tabsheet = new tabsheet();
 $tabsheet->set_id('photos_add'); // <= don't forget tabsheet id
-$tabsheet->select('skeleton');
+$tabsheet->select('createText');
 $tabsheet->assign();
 
 /* Initialisation */
@@ -105,9 +105,9 @@ SELECT category_id
 
 $template->assign(array(
   'F_ACTION' => $self_url,
-  'skeleton' => $conf['skeleton'],
+  'createText' => $conf['createText'],
   'CONTENT' => $content,
   'selected_category' => $selected_category
 ));
 
-$template->set_filename('skeleton_content', realpath(SKELETON_PATH . 'admin/photos_add.tpl'));
+$template->set_filename('create_text_content', realpath(CREATE_TEXT_PATH . 'admin/photos_add.tpl'));

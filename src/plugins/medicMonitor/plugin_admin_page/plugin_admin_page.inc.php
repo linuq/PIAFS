@@ -13,11 +13,9 @@ $medic_monitor_db = new medic_monitor_db();
 $queryResult = $medic_monitor_db->getColumnNames();
 
 $columns = [];
-foreach($queryResult as $index => $row){
-    foreach($row as $columnName){
-        if($columnName != "date" && $columnName != "id"){
-            $columns[] = $columnName;
-        }
+foreach($queryResult as $item){
+    if($item != "id" && $item != "date"){
+        $columns[] = $item;
     }
 }
 

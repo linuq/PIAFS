@@ -28,30 +28,14 @@ class medic_monitor_db
 
         $columns = $this->getColumnNames();
 
-        $columnString = "";
-        foreach($columns as $column){
-            if($column != "id"){
-                $columnString .= $column;
-            }
-        }
-
-        $db_name = pwg_db_fetch_assoc(pwg_query("SELECT DATABASE();"));
+        $columnString = $this->getAssociatedColumnNamesExcept($columns, "id");
 
         $query = "
-            SET @sql = CONCAT('SELECT ', 
-                (SELECT REPLACE(GROUP_CONCAT(COLUMN_NAME), 'id,', '') 
-                FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '".$this->table."' 
-                AND TABLE_SCHEMA = '".$db_name["DATABASE()"]."'), ' 
-            FROM ".$this->table."');
-            ";
-        pwg_query($query);
-
-        $query= "PREPARE stmt1 FROM @sql;";
-        pwg_query($query);
-
-        $query="EXECUTE stmt1";
-        $queryResult = pwg_query($query);
-        return $this->makeArrayOfFormElements($queryResult);
+            SELECT ".$columnString."
+            FROM ".$this->table."
+            WHERE `id` = '".$userId."' 
+        ";
+        return pwg_query($query);
     }
 
     function addColumn($column_name){
@@ -98,6 +82,16 @@ class medic_monitor_db
             $columns .= "`" . $key . "`, ";
         }
         return rtrim($columns, ", ");
+    }
+
+    private function getAssociatedColumnNamesExcept($columns, $columnToOmit){
+        $columnString = "";
+        foreach($columns as $column){
+            if($column != $columnToOmit){
+                $columnString .= " `". $column . "`, ";
+            }
+        }
+        return rtrim($columnString, ", ");
     }
 
     private function getValuesName($userId, $items){

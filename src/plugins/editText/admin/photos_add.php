@@ -1,11 +1,8 @@
 <?php
-defined('CREATE_TEXT_PATH') or die('Hacking attempt!');
+defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 
-// +-----------------------------------------------------------------------+
-// | Photo[createText] tab                                                   |
-// +-----------------------------------------------------------------------+
-
-include_once(CREATE_TEXT_PATH.'/include/functions_upload.inc.php');
+include_once(EDIT_TEXT_PATH.'/include/functions_upload.inc.php');
+include_once(EDIT_TEXT_PATH.'admin/photo_db.php');
 
 define(
   'PHOTOS_ADD_BASE_URL',
@@ -17,7 +14,7 @@ $page['active_menu'] = get_active_menu('photo'); // force oppening "Photos" menu
 /* Basic checks */
 check_status(ACCESS_ADMINISTRATOR);
 
-$self_url = CREATE_TEXT_ADMIN.'-photos_add';
+$self_url = EDIT_TEXT_ADMIN.'-photos_add';
 
 /* Tabs */
 // when adding a tab to an existing tabsheet you MUST reproduce the core tabsheet code
@@ -25,10 +22,12 @@ $self_url = CREATE_TEXT_ADMIN.'-photos_add';
 include_once(PHPWG_ROOT_PATH.'admin/include/tabsheet.class.php');
 $tabsheet = new tabsheet();
 $tabsheet->set_id('photos_add'); // <= don't forget tabsheet id
-$tabsheet->select('createText');
+$tabsheet->select('skeleton');
 $tabsheet->assign();
 
 /* Initialisation */
+
+$photo_db = new photo_db();
 
 $content="";
 
@@ -59,14 +58,9 @@ if (isset($_GET['album']))
   // set the category from get url or ...
   check_input_parameter('album', $_GET, false, PATTERN_ID);
 
-  // test if album really exists
-  $query = '
-SELECT id
-  FROM '.CATEGORIES_TABLE.'
-  WHERE id = '.$_GET['album'].'
-;';
-  $result = pwg_query($query);
-  if (pwg_db_num_rows($result) == 1)
+  $album = $_GET['album'];
+  
+  if ($photo_db->albumExists($album))
   {
     $selected_category = array($_GET['album']);
 
@@ -84,30 +78,14 @@ else if (isset($_SESSION['selected_category']))
 }
 else
 {
-  // we need to know the category in which the last photo was added
-  $query = '
-SELECT category_id
-  FROM '.IMAGES_TABLE.' AS i
-    JOIN '.IMAGE_CATEGORY_TABLE.' AS ic ON image_id = i.id
-    JOIN '.CATEGORIES_TABLE.' AS c ON category_id = c.id
-  ORDER BY i.id DESC
-  LIMIT 1
-;
-';
-  $result = pwg_query($query);
-  if (pwg_db_num_rows($result) > 0)
-  {
-    $row = pwg_db_fetch_assoc($result);
-    $selected_category = array($row['category_id']);
-  }
+  $selected_category = $photo_db->getSelectedCategory();
 }
 
 
 $template->assign(array(
   'F_ACTION' => $self_url,
-  'createText' => $conf['createText'],
   'CONTENT' => $content,
   'selected_category' => $selected_category
 ));
 
-$template->set_filename('create_text_content', realpath(CREATE_TEXT_PATH . 'admin/photos_add.tpl'));
+$template->set_filename('edit_text_content', realpath(EDIT_TEXT_PATH . 'admin/photos_add.tpl'));

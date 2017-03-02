@@ -1,4 +1,4 @@
-{combine_css path=$CREATE_TEXT_PATH|@cat:"admin/style.css"}
+{combine_css path=$EDIT_TEXT_PATH|@cat:"admin/style.css"}
 
 {combine_script id='common' load='footer' path='admin/themes/default/js/common.js'}
 
@@ -226,7 +226,7 @@ jQuery(document).ready(function(){
   <meta charset="UTF-8">
 </head>
 
-<h2>{$TITLE} &#8250; {'Create txt'|translate} {$TABSHEET_TITLE}</h2>
+<h2>{'Create txt'|translate}</h2>
 
 <form action="{$F_ACTION}" method="post">
   <fieldset>
@@ -251,7 +251,7 @@ jQuery(document).ready(function(){
 
       <p><textarea name="createTxt" id="createTxt" placeholder="Contenu"></textarea></p>
 
-      <p><input class="submit" type="submit" value="{'Publier'|translate}" name="save_createText"></p>
+      <p><input class="submit" type="submit" value="{'Publier'|translate}" name="save_skeleton"></p>
       <input type="hidden" name="form">
     </fieldset>
 

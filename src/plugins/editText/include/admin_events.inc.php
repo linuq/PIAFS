@@ -16,3 +16,19 @@ function edit_text_tabsheet_before_select($sheets, $id)
 
   return $sheets;
 }
+
+/**
+ * add a tab on photos_add  page
+ */
+function create_text_tabsheet_before_select_add($sheets, $id)
+{
+  if ($id == 'photos_add')
+  {
+    $sheets['editText'] = array(
+      'caption' => l10n('Ajouter un document texte'),
+      'url' => EDIT_TEXT_ADMIN.'-photos_add',
+      );
+  }
+
+  return $sheets;
+}

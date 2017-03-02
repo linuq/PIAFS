@@ -55,7 +55,7 @@ class medic_monitor_db
     function dropColumn($column_name){
         $query = '
             ALTER TABLE '. $this->table .'
-            DROP COLUMN ' . $column_name .'
+            DROP COLUMN `' . $column_name .'`
         ';
         pwg_query($query);
     }

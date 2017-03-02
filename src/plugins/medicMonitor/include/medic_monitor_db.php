@@ -25,6 +25,16 @@ class medic_monitor_db
     }
 
     function getAllDataByUser($userId){
+
+        $columns = $this->getColumnNames();
+
+        $columnString = "";
+        foreach($columns as $column){
+            if($column != "id"){
+                $columnString .= $column;
+            }
+        }
+
         $db_name = pwg_db_fetch_assoc(pwg_query("SELECT DATABASE();"));
 
         $query = "
@@ -100,13 +110,9 @@ class medic_monitor_db
     }
 
     private function makeArrayOfFormElements($queryResult){
-        $form_elements = array();
-        foreach($queryResult as $queryRow){
-            $array_to_push = array();
-            foreach($queryRow as $queryColumn){
-                array_push($array_to_push, $queryColumn);
-            }
-            array_push($form_elements, $array_to_push);
+        $form_elements = [];
+        foreach($queryResult as $queryRow => $value){
+            $form_elements[] = $value["COLUMN_NAME"];
         }
         return $form_elements;
     }

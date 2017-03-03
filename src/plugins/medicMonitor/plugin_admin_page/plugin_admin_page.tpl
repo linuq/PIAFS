@@ -28,7 +28,7 @@
           {$columnName}
         </td>
         <td>
-          <a onclick="deleteColumn('{$columnName}')" > <i class="fa fa-trash"> </i> </a>
+          <a> <i onclick="deleteColumn('{$columnName}')" class="fa fa-trash"> </i> </a>
         </td>
       </tr>
     {/foreach}

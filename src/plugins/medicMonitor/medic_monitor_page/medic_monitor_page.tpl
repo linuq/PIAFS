@@ -26,7 +26,7 @@
             </td>
           {/foreach}
           <td>
-            <a onclick="deleteRow('{$row["date"]}')"><i class="fa fa-times"></i></a>
+            <a><i onclick="deleteRow('{$row["date"]}')" class="fa fa-times"></i></a>
           </td>
         </tr>
       {/foreach}

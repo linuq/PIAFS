@@ -111,6 +111,20 @@ class medic_monitor_db
         return $form_elements;
     }
 
+    function rowExists($userId, $date){
+        $query = "
+            SELECT *
+            FROM ".$this->table."
+            WHERE `id` = '".$userId."'
+            AND `date` = '".$date."' 
+        ;";
+        $queryResult = pwg_query($query);
+        if(pwg_db_num_rows($queryResult) > 0){
+            return true;
+        }
+        return false;
+    }
+
 }
 
 ?>

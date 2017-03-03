@@ -1,11 +1,11 @@
 #!/bin/bash
-echo "Quel est le nom de la famille à créer?"
+echo "Quel est le nom de la famille a créer?"
 read familyName
 
 echo
 
 mkdir $familyName
-echo "La famille $familyName à été créée"
+echo "La famille $familyName a été eee"
 
 echo
 
@@ -15,8 +15,16 @@ echo "Création des fichiers nécessaires"
 
 echo
 
-cd '/etc/apache2/'
-echo "Alias /$familyName /var/www/html" >> apache2.conf	
+chown -R www-data:www-data .
+echo "Droit acces requis donner"
 
-cd '/etc/apache2/sites-available/' #Ajouter config a ligne specifique
+cd '/etc/apache2/'
+echo "Alias /$familyName /var/www/html" >> apache2.conf
+
+cd '/etc/apache2/sites-available/'
+add="   Alias /$familyName /var/www/html"
+sed -i "13i\ $add" 000-default.conf
 echo "Ajout de l'alias dans la configuration de Apache"
+
+eval "service apache2 reload"
+echo "Reload le service Apache"

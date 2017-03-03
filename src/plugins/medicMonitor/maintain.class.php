@@ -6,11 +6,11 @@ defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
  * It must extends PluginMaintain and be named "PLUGINID_maintain"
  * where PLUGINID is the directory name of your plugin.
  */
-class userInfo_maintain extends PluginMaintain
+class medicMonitor_maintain extends PluginMaintain
 {
   private $table;
   private $dir;
-  private $formElementTable;
+  private $medicMonitorTable;
   private $historyTable;
 
   function __construct($plugin_id)
@@ -20,10 +20,9 @@ class userInfo_maintain extends PluginMaintain
     global $prefixeTable;
 
     // Class members can't be declared with computed values so initialization is done here
-    $this->table = $prefixeTable . 'form_element_info';
-    $this->formElementTable = $prefixeTable . 'form_element';
+    $this->table = $prefixeTable . 'medic_monitor';
     $this->historyTable = $prefixeTable . 'history';
-    $this->dir = PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'userInfo/';
+    $this->dir = PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'medicMonitor/';
   }
 
   /**
@@ -36,8 +35,6 @@ class userInfo_maintain extends PluginMaintain
   {
     $this->addPluginTable();
 
-    $this->addFormElementTable();
-
     $this->alterHistoryTable();
   
     $this->createLocalDirectory();
@@ -47,20 +44,10 @@ class userInfo_maintain extends PluginMaintain
     pwg_query('
     CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
       `id` int(11) unsigned NOT NULL,
-      PRIMARY KEY (`id`)
+      `date` DATETIME NOT NULL DEFAULT NOW(), 
+      PRIMARY KEY (`id`, `date`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8
     ;');
-  }
-
-  private function addFormElementTable(){
-    pwg_query("
-    CREATE TABLE IF NOT EXISTS `". $this->formElementTable ."` (
-      form_element_name varchar(64) NOT NULL default '',
-      form_element_type varchar(64) DEFAULT NULL,
-      form_element_choices varchar(64) DEFAULT NULL,
-      PRIMARY KEY (`form_element_name`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8
-    ;");
   }
 
   private function alterHistoryTable(){
@@ -117,19 +104,12 @@ class userInfo_maintain extends PluginMaintain
   {
     $this->dropPluginTable();
 
-    $this->dropFormElementTable();
-
     $this->deleteLocalFolder();
   }
 
   private function dropPluginTable(){
     // delete table
     pwg_query('DROP TABLE `'. $this->table .'`;');
-  }
-
-  private function dropFormElementTable(){
-        // delete table
-    pwg_query('DROP TABLE `'. $this->formElementTable .'`;');
   }
 
   private function deleteLocalFolder(){

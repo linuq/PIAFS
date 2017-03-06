@@ -46,5 +46,7 @@
         </td>
       </tr>
     </table>
+    <br>
+    <button type="button" onclick="downloadInfo()"> {'Download table'|translate} </button>
   </form>
 </div>

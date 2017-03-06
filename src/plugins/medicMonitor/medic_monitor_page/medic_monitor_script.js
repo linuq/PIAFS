@@ -41,3 +41,18 @@ function deleteRow(element_time){
     }
   });
 }
+
+function downloadInfo(){
+    jQuery.ajax({
+    type: "POST",
+    url: 'plugins/medicMonitor/medic_monitor_page/medic_monitor_download.php',
+    datatype: "json",
+    success: function (response) {
+      console.log(JSON.stringify(response));
+      location.reload();
+    },
+    error: function (response) {
+      $("#errorForm").show();
+    }
+  });
+}

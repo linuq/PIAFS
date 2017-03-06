@@ -1,7 +1,5 @@
 <?php
 
-global $user;
-
 define('PHPWG_ROOT_PATH','../../../');
 define('IN_ADMIN', true);
 
@@ -10,42 +8,49 @@ include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
 include_once(PHPWG_ROOT_PATH.'admin/include/functions_upload.inc.php');
 include_once(MEDIC_MONITOR_PATH.'include/medic_monitor_db.php');
 
-$medic_monitor_db = new medic_monitor_db();
+writeMedicInfo();
 
-$file = MEDIC_MONITOR_PATH.'include/medic_monitor_info.txt';
-$fp = fopen($file, "w+");
+function writeMedicInfo(){
+    
+    global $user;
 
-//Get columns names
-$columnNames = $medic_monitor_db->getColumnNames();
+    $medic_monitor_db = new medic_monitor_db();
 
-//Write columns names
-foreach($columnNames as $column){
-    if($column != "id"){
-        fwrite($fp, $column . "\t");
-    }
-}
-fwrite($fp, "\n");
+    $file = MEDIC_MONITOR_PATH.'include/medic_monitor_info.txt';
+    $fp = fopen($file, "w+");
 
-//Get medic_monitor_info
-$userInfo = $medic_monitor_db->getAllDataByUser($user["id"]);
+    //Get columns names
+    $columnNames = $medic_monitor_db->getColumnNames();
 
-$form_elements = [];
-foreach($userInfo as $queryRow){
-    $array_to_push = [];
-    foreach($queryRow as $queryColumn){
-        $array_to_push[] = $queryColumn;
-    }
-    $form_elements[] = $array_to_push;
-}
-
-//Write medic_monitor_info
-foreach ($form_elements as $fields) {
-    foreach($fields as $field){
-        fwrite($fp, $field . "\t");
+    //Write columns names
+    foreach($columnNames as $column){
+        if($column != "id"){
+            fwrite($fp, $column . "\t");
+        }
     }
     fwrite($fp, "\n");
-}
 
-fclose($fp);
+    //Get medic_monitor_info
+    $userInfo = $medic_monitor_db->getAllDataByUser($user["id"]);
+
+    $form_elements = [];
+    foreach($userInfo as $queryRow){
+        $array_to_push = [];
+        foreach($queryRow as $queryColumn){
+            $array_to_push[] = $queryColumn;
+        }
+        $form_elements[] = $array_to_push;
+    }
+
+    //Write medic_monitor_info
+    foreach ($form_elements as $fields) {
+        foreach($fields as $field){
+            fwrite($fp, $field . "\t");
+        }
+        fwrite($fp, "\n");
+    }
+
+    fclose($fp);
+}
 
 ?>

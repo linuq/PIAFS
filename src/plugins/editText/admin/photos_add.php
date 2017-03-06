@@ -17,7 +17,7 @@ $self_url = EDIT_TEXT_ADMIN.'-photos_add';
 include_once(PHPWG_ROOT_PATH.'admin/include/tabsheet.class.php');
 $tabsheet = new tabsheet();
 $tabsheet->set_id('photos_add');
-$tabsheet->select('skeleton');
+$tabsheet->select('editText');
 $tabsheet->assign();
 
 /* Initialisation */

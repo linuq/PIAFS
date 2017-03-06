@@ -47,6 +47,6 @@
       </tr>
     </table>
     <br>
-    <button type="button" onclick="downloadInfo()"> {'Download table'|translate} </button>
+    <button type="button" onclick="downloadInfo()"> {'Upload table'|translate} </button>
   </form>
 </div>

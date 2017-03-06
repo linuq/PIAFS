@@ -8,15 +8,17 @@ include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
 include_once(PHPWG_ROOT_PATH.'admin/include/functions_upload.inc.php');
 include_once(MEDIC_MONITOR_PATH.'include/medic_monitor_db.php');
 
-writeMedicInfo();
+$fileName = 'medic_monitor_info.txt';
+$filePath = MEDIC_MONITOR_PATH.'include/'.$fileName;
+writeMedicInfo($filePath);
+uploadMedicInfo($filePath, $fileName);
 
-function writeMedicInfo(){
+function writeMedicInfo($file){
     
     global $user;
 
     $medic_monitor_db = new medic_monitor_db();
 
-    $file = MEDIC_MONITOR_PATH.'include/medic_monitor_info.txt';
     $fp = fopen($file, "w+");
 
     //Get columns names
@@ -51,6 +53,11 @@ function writeMedicInfo(){
     }
 
     fclose($fp);
+}
+
+function uploadMedicInfo($filePath, $fileName){
+    $category_id = 2;
+    @add_uploaded_file($filePath, $fileName, array($category_id));
 }
 
 ?>

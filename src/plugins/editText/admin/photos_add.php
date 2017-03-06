@@ -1,7 +1,7 @@
 <?php
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 
-include_once(EDIT_TEXT_PATH.'/include/functions_upload.inc.php');
+include_once(PHPWG_ROOT_PATH.'admin/include/functions_upload.inc.php');
 include_once(EDIT_TEXT_PATH.'admin/photo_db.php');
 
 define('PHOTOS_ADD_BASE_URL', get_root_url().'admin.php?page=photos_add');
@@ -45,14 +45,14 @@ $template->assign(array(
 $template->set_filename('edit_text_content', realpath(EDIT_TEXT_PATH . 'admin/photos_add.tpl'));
 
 function uploadFile(){
-    $file_path=$_POST['nameTxt'];
+    $file_path= $_POST['nameTxt'] . ".txt";
     $category_id = $_POST['category'];
 
     $handle=fopen($file_path, "a+");
-    fwrite($handle, $_POST['createTxt']);
+    fwrite($handle, stripslashes($_POST['createTxt']));
     fclose($handle);
 
-    $image_id = add_uploaded_file($file_path, $_POST['nameTxt'].'.txt', array($category_id));
+    $image_id = @add_uploaded_file($file_path, $_POST['nameTxt'].'.txt', array($category_id));
 }
 
 function getSelectedCategory(){

@@ -14,17 +14,13 @@ check_status(ACCESS_ADMINISTRATOR);
 $self_url = EDIT_TEXT_ADMIN.'-photos_add';
 
 /* Tabs */
-// when adding a tab to an existing tabsheet you MUST reproduce the core tabsheet code
-// this way it will not break compatibility with other plugins and with core functions
 include_once(PHPWG_ROOT_PATH.'admin/include/tabsheet.class.php');
 $tabsheet = new tabsheet();
-$tabsheet->set_id('photos_add'); // <= don't forget tabsheet id
+$tabsheet->set_id('photos_add');
 $tabsheet->select('skeleton');
 $tabsheet->assign();
 
 /* Initialisation */
-
-$photo_db = new photo_db();
 
 $content="";
 
@@ -38,6 +34,16 @@ if(isset($_POST['form'])){
   }
 }
 
+$selected_category = getSelectedCategory();
+
+$template->assign(array(
+  'F_ACTION' => $self_url,
+  'CONTENT' => $content,
+  'selected_category' => $selected_category
+));
+
+$template->set_filename('edit_text_content', realpath(EDIT_TEXT_PATH . 'admin/photos_add.tpl'));
+
 function uploadFile(){
     $file_path=$_POST['nameTxt'];
     $category_id = $_POST['category'];
@@ -49,42 +55,38 @@ function uploadFile(){
     $image_id = add_uploaded_file($file_path, $_POST['nameTxt'].'.txt', array($category_id));
 }
 
-// we need to know the category in which the last photo was added
-$selected_category = array();
+function getSelectedCategory(){
+  $photo_db = new photo_db();
 
-if (isset($_GET['album']))
-{
-  // set the category from get url or ...
-  check_input_parameter('album', $_GET, false, PATTERN_ID);
+  // we need to know the category in which the last photo was added
+  $selected_category = array();
 
-  $album = $_GET['album'];
-  
-  if ($photo_db->albumExists($album))
+  if (isset($_GET['album']))
   {
-    $selected_category = array($album);
+    // set the category from get url or ...
+    check_input_parameter('album', $_GET, false, PATTERN_ID);
 
-    // lets put in the session to persist in case of upload method switch
-    $_SESSION['selected_category'] = $selected_category;
+    $album = $_GET['album'];
+    
+    if ($photo_db->albumExists($album))
+    {
+      $selected_category = array($album);
+
+      // lets put in the session to persist in case of upload method switch
+      $_SESSION['selected_category'] = $selected_category;
+    }
+    else
+    {
+      fatal_error('[Hacking attempt] the album id = "'.$album.'" is not valid');
+    }
+  }
+  else if (isset($_SESSION['selected_category']))
+  {
+    $selected_category = $_SESSION['selected_category'];
   }
   else
   {
-    fatal_error('[Hacking attempt] the album id = "'.$album.'" is not valid');
+    $selected_category = $photo_db->getSelectedCategory();
   }
+  return $selected_category;
 }
-else if (isset($_SESSION['selected_category']))
-{
-  $selected_category = $_SESSION['selected_category'];
-}
-else
-{
-  $selected_category = $photo_db->getSelectedCategory();
-}
-
-
-$template->assign(array(
-  'F_ACTION' => $self_url,
-  'CONTENT' => $content,
-  'selected_category' => $selected_category
-));
-
-$template->set_filename('edit_text_content', realpath(EDIT_TEXT_PATH . 'admin/photos_add.tpl'));

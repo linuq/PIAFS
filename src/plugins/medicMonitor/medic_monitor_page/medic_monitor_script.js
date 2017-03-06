@@ -48,7 +48,7 @@ function downloadInfo(){
     url: 'plugins/medicMonitor/medic_monitor_page/medic_monitor_download.php',
     datatype: "json",
     success: function (response) {
-      console.log(JSON.stringify(response));
+      console.log(response);
       location.reload();
     },
     error: function (response) {

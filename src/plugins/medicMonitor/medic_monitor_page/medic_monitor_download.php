@@ -21,7 +21,7 @@ $columnNames = $medic_monitor_db->getColumnNames();
 //Write columns names
 foreach($columnNames as $column){
     if($column != "id"){
-        fwrite($fp, $column . " ");
+        fwrite($fp, $column . "\t");
     }
 }
 fwrite($fp, "\n");
@@ -41,7 +41,7 @@ foreach($userInfo as $queryRow){
 //Write medic_monitor_info
 foreach ($form_elements as $fields) {
     foreach($fields as $field){
-        fwrite($fp, $field . " ");
+        fwrite($fp, $field . "\t");
     }
     fwrite($fp, "\n");
 }

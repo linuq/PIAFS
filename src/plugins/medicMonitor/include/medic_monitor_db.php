@@ -14,10 +14,16 @@ class medic_monitor_db
     }
 
     function getColumnNames(){
+        $query = 'SELECT DATABASE();';
+        $databaseNameQuery = pwg_query($query);
+        foreach($databaseNameQuery as $row => $index){
+            $databaseName = $index["DATABASE()"];
+        }
+
         $query = '
             SELECT `COLUMN_NAME` 
             FROM `INFORMATION_SCHEMA`.`COLUMNS` 
-            WHERE `TABLE_SCHEMA`=\'piwigo\' 
+            WHERE `TABLE_SCHEMA`=\''.$databaseName.'\' 
                 AND `TABLE_NAME`=\''.$this->table.'\'
         ';
         $queryResult = pwg_query($query);

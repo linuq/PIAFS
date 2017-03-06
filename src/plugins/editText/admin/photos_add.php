@@ -1,12 +1,9 @@
 <?php
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
+define('PHOTOS_ADD_BASE_URL', get_root_url().'admin.php?page=photos_add');
 
 include_once(PHPWG_ROOT_PATH.'admin/include/functions_upload.inc.php');
 include_once(EDIT_TEXT_PATH.'admin/photo_db.php');
-
-define('PHOTOS_ADD_BASE_URL', get_root_url().'admin.php?page=photos_add');
-
-$page['active_menu'] = get_active_menu('photo'); // force oppening "Photos" menu block
 
 /* Basic checks */
 check_status(ACCESS_ADMINISTRATOR);

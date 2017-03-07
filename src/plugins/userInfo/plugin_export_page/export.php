@@ -1,5 +1,5 @@
 <?php
-defined('SKELETON_PATH') or die('Hacking attempt!');
+defined('USER_INFO_PATH') or die('Hacking attempt!');
 
 // +-----------------------------------------------------------------------+
 // | Photo[Skeleton] tab                                                   |
@@ -10,9 +10,9 @@ $page['active_menu'] = get_active_menu('user_list'); // force oppening "Users" m
 /* Basic checks */
 check_status(ACCESS_ADMINISTRATOR);
 
-$my_base_url = get_root_url().'admin.php?page=';
+$my_base_url = get_root_url().'admin.php?page=user_list';
 
-$self_url = SKELETON_ADMIN.'-export';
+$self_url = get_root_url() . 'admin.php?page=export';
 
 /* Tabs */
 // when adding a tab to an existing tabsheet you MUST reproduce the core tabsheet code
@@ -20,7 +20,7 @@ $self_url = SKELETON_ADMIN.'-export';
 include_once(PHPWG_ROOT_PATH.'admin/include/tabsheet.class.php');
 $tabsheet = new tabsheet();
 $tabsheet->set_id('users'); // <= don't forget tabsheet id
-$tabsheet->select('skeleton');
+$tabsheet->select('export');
 $tabsheet->assign();
 
 /* Initialisation */
@@ -62,4 +62,4 @@ $template->assign(array(
   'CONTENT' => $content
 ));
 
-$template->set_filename('skeleton_content', realpath(SKELETON_PATH . 'admin/export.tpl'));
+$template->set_filename('info_user_content', realpath(USER_INFO_PATH . 'plugin_export_page/export.tpl'));

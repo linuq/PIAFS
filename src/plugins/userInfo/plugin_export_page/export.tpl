@@ -1,4 +1,4 @@
-{combine_css path=$SKELETON_PATH|@cat:"admin/style.css"}
+{combine_css path=$USER_INFO_PATH|@cat:"admin/style.css"}
 
 <head>
   <meta charset="UTF-8">

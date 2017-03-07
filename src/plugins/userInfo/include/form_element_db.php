@@ -78,7 +78,7 @@ class form_element_db
         $query = '
             DELETE FROM '.$this->form_element_table.'
             WHERE form_element_name = \''.$form_element_name.'\'
-        ';
+            ';
         pwg_query($query);
     }
 

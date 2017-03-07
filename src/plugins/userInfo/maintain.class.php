@@ -65,7 +65,7 @@ class userInfo_maintain extends PluginMaintain
 
   private function alterHistoryTable(){
     // add a new section to piwigo history
-    pwg_query('ALTER TABLE '. $this->historyTable .' CHANGE section section ENUM(\'categories\',\'tags\',\'search\',\'list\',\'favorites\',\'most_visited\',\'best_rated\',\'recent_pics\',\'recent_cats\',\'user_info\',\'add_photos\');');
+    pwg_query('ALTER TABLE '. $this->historyTable .' CHANGE section section ENUM(\'categories\',\'tags\',\'search\',\'list\',\'favorites\',\'most_visited\',\'best_rated\',\'recent_pics\',\'recent_cats\',\'user_info\',\'add_photos\',\'medic_monitor\');');
   }
 
   private function createLocalDirectory(){

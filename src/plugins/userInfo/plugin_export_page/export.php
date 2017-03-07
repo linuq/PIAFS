@@ -63,7 +63,6 @@ if(isset($_POST['confirm'])){
 
 $template->assign(array(
   'F_ACTION' => $self_url,
-  'skeleton' => $conf['skeleton'],
   'CONTENT' => $content
 ));
 

@@ -14,10 +14,16 @@ class medic_monitor_db
     }
 
     function getColumnNames(){
+        $query = 'SELECT DATABASE();';
+        $databaseNameQuery = pwg_query($query);
+        foreach($databaseNameQuery as $row => $index){
+            $databaseName = $index["DATABASE()"];
+        }
+
         $query = '
             SELECT `COLUMN_NAME` 
             FROM `INFORMATION_SCHEMA`.`COLUMNS` 
-            WHERE `TABLE_SCHEMA`=\'piwigo\' 
+            WHERE `TABLE_SCHEMA`=\''.$databaseName.'\' 
                 AND `TABLE_NAME`=\''.$this->table.'\'
         ';
         $queryResult = pwg_query($query);
@@ -123,6 +129,37 @@ class medic_monitor_db
             return true;
         }
         return false;
+    }
+
+
+    function albumExists($album){
+        $query = '
+        SELECT id
+            FROM '.CATEGORIES_TABLE.'
+            WHERE id = '.$album.'
+        ;';
+        $result = pwg_query($query);
+        if (pwg_db_num_rows($result) == 1){
+            return true;
+        }
+        return false;
+    }
+
+    function getSelectedCategory(){
+        $query = '
+            SELECT category_id
+            FROM '.IMAGES_TABLE.' AS i
+                JOIN '.IMAGE_CATEGORY_TABLE.' AS ic ON image_id = i.id
+                JOIN '.CATEGORIES_TABLE.' AS c ON category_id = c.id
+            ORDER BY i.id DESC
+            LIMIT 1
+            ;';
+        $result = pwg_query($query);
+        if (pwg_db_num_rows($result) > 0)
+        {
+            $row = pwg_db_fetch_assoc($result);
+            return array($row['category_id']);
+        }
     }
 
 }

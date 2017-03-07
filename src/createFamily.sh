@@ -8,10 +8,16 @@ if [ $# -eq 0 ]
 	echo "Quel est le nom de la famille a ajouter?"
 	read familyName
 fi
-cd '/var/www/html/src'
-mkdir $familyName
 
-echo "La famille $familyName a été créée"
+cd '/var/www/html/src'
+if [ ! -d "$familyName" ]; 
+ then
+	mkdir $familyName
+	echo "La famille $familyName a été créée"
+ else
+	echo "La famille $familyName existe déjà"
+	exit 0;
+fi
 
 echo
 

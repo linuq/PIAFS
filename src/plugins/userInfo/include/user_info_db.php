@@ -15,8 +15,8 @@ class user_info_db
 
     function userInfoExists($id){
         $query = '
-            SELECT * 
-            FROM '.$this->table.' 
+            SELECT *
+            FROM '.$this->table.'
             WHERE id = '. $id .'';
         $result = pwg_db_fetch_assoc(pwg_query($query));
 
@@ -28,7 +28,7 @@ class user_info_db
 
     function getUserInfo($userId){
         $query = '
-            SELECT * 
+            SELECT *
             FROM '. $this->table.'
             WHERE id = '. $userId;
         return pwg_db_fetch_assoc(pwg_query($query));
@@ -40,7 +40,7 @@ class user_info_db
         $values = $this->getValuesName($id, $items);
 
         $query = '
-        INSERT INTO '. $this->table.'('.$columns.') 
+        INSERT INTO '. $this->table.'('.$columns.')
         VALUES ('.$values.')
         ;';
         pwg_query($query);
@@ -72,6 +72,14 @@ class user_info_db
             WHERE id ='.$id.'
             ';
         pwg_query($query);
+    }
+
+    function getAllUsersInfo(){
+        $query = '
+            SELECT *
+            FROM '.$this->table.'
+            ORDER BY id';
+        return pwg_query($query);
     }
 
     private function getInfoToUpdate($items){

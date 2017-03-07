@@ -12,7 +12,7 @@ check_status(ACCESS_ADMINISTRATOR);
 
 $my_base_url = get_root_url().'admin.php?page=user_list';
 
-$self_url = get_root_url() . 'admin.php?page=export';
+$self_url = USER_INFO_ADMIN.'-export';
 
 /* Tabs */
 // when adding a tab to an existing tabsheet you MUST reproduce the core tabsheet code
@@ -25,33 +25,38 @@ $tabsheet->assign();
 
 /* Initialisation */
 
+include_once(USER_INFO_PATH."/include/user_info_db.php");
+
+$user_info_db = new user_info_db();
+
 $content="";
-$file="formulaires_sante.csv";
+$filename="formulaires_sante.csv";
 
 if(isset($_POST['confirm'])){
 
-  //First we create an empty csv file on the server
-
-  $handle=fopen($file, "a+");
+  header('Content-Type: text/csv; charset=utf-8');
+  header('Content-Disposition: attachment; filename='.$filename.'');
+  $handle = fopen("php://output", "w");
 
   //Data search in DB
 
+  $result = $user_info_db -> getAllUsersInfo();
+
   //Writing data in csv file
 
-  /*foreach($form as $fields){
-    fputcsv($handle, $fields);
-  }*/
+  while($row = pwg_db_fetch_assoc($result))
+  {
+      fputcsv($handle, $row);
+  }
 
-  //Then we download the file on our local machine
-
-  header('Content-Transfer-Encoding: binary');
-  header('Content-Disposition: attachment; filename='.$file.'');
-  //readfile($file);
+  fclose($handle);
 
   //Finally we can delete the useless file on the server
 
-  if(file_exists($file))
-     unlink($file);
+  if(file_exists($filename))
+     unlink($filename);
+
+  exit();
 
   $content="Les formulaires de santé ont bien été téléchargés";
 }

@@ -2,13 +2,13 @@
 
 function create_family
 {
-        echo "Quel est le nom de la famille �|  créer?"
+        echo "Quel est le nom de la famille a créer?"
         read familyName
 
         cd '/var/www/html/'
         mkdir $familyName
 
-        echo "La famille $familyName �|  été créée"
+        echo "La famille $familyName a été créée"
 
         echo
 
@@ -27,7 +27,7 @@ function create_family
         add="   Alias /$familyName /var/www/html"
 
         sed -i "13i\ $add" 000-default.conf
-        echo "Ajout de l'alias dans la configuration de Apache"
+        echo "Ajout de la famille dans la configuration de Apache"
 
         eval "/etc/init.d/apache2 reload"
 }

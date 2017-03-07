@@ -53,5 +53,37 @@ $template->set_filename('medic_monitor_page', realpath(MEDIC_MONITOR_PATH . 'med
 $template->assign_var_from_handle('CONTENT', 'medic_monitor_page');
 
 function getSelectedCategory(){
-  return 8;
+  $medic_monitor_db = new medic_monitor_db();
+
+  // we need to know the category in which the last photo was added
+  $selected_category = array();
+
+  if (isset($_GET['album']))
+  {
+    // set the category from get url or ...
+    check_input_parameter('album', $_GET, false, PATTERN_ID);
+
+    $album = $_GET['album'];
+    
+    if ($medic_monitor_db->albumExists($album))
+    {
+      $selected_category = array($album);
+
+      // lets put in the session to persist in case of upload method switch
+      $_SESSION['selected_category'] = $selected_category;
+    }
+    else
+    {
+      fatal_error('[Hacking attempt] the album id = "'.$album.'" is not valid');
+    }
+  }
+  else if (isset($_SESSION['selected_category']))
+  {
+    $selected_category = $_SESSION['selected_category'];
+  }
+  else
+  {
+    $selected_category = $medic_monitor_db->getSelectedCategory();
+  }
+  return $selected_category;
 }

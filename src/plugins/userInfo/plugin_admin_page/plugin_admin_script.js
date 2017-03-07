@@ -24,6 +24,7 @@ function addFormElementWithChoices(choices){
       form_element_choices: choices
     },
     success: function (response) {
+      location.reload();
       console.log(JSON.stringify(response));
     },
     error: function (response) {
@@ -42,6 +43,7 @@ function addFormElementWithoutChoices(){
       form_element_type: $('#form_element_type').val()
     },
     success: function (response) {
+      location.reload();
       console.log(JSON.stringify(response));
     },
     error: function (response) {

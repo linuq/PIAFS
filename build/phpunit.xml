@@ -14,8 +14,6 @@
       <directory suffix="Test.php">../tests/form_element_db_tests.php</directory>
       <directory suffix="Test.php">../tests/post_validation_tests.php</directory>
       <directory suffix="Test.php">../tests/user_info_db_tests.php</directory>
-      <directory suffix="Test.php">../tests/delete_family_tests.php</directory>  
-      <directory suffix="Test.php">../tests/create_family_tests.php</directory>
     </testsuite>
          
     <filter>

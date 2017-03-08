@@ -1,6 +1,6 @@
 <?php
 
-include_once '../src/createFamily.sh';
+include_once './src/createFamily.sh';
 
 class create_family_tests extends PHPUnit_Framework_TestCase
 {
@@ -8,7 +8,7 @@ class create_family_tests extends PHPUnit_Framework_TestCase
     public function test_create_a_new_family()
     {
 	$createFamily=shell_exec('../src/createFamily.sh var4');
-	$doFileExist=file_exists('../src/var4');
+	$doFileExist=file_exists('./src/var4');
 
 	$this->assertTrue($doFileExist);
     }

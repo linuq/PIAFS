@@ -4,13 +4,11 @@
   <meta charset="UTF-8">
 </head>
 
-<h2>{$TITLE} > {'Export users infos'|translate}</h2>
+<h2>{$TITLE} &#8250; {'Export users infos'|translate}</h2>
 
 <form action="{$F_ACTION}" method="post">
   <fieldset>
     <legend>{'Export form'|translate}</legend>
-
-    <p id="alert">{$CONTENT}</p>
 
     <p>Pour télécharger les formulaires de santé des familles sous ce contrat, appuyez sur ce bouton :</p>
     <input type="hidden" name="confirm">

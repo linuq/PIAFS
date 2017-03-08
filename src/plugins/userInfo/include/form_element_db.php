@@ -16,7 +16,7 @@ class form_element_db
 
     function getAllFormElements(){
         $query = '
-            SELECT * 
+            SELECT *
             FROM '.$this->form_element_table.'';
         $queryResult = pwg_query($query);
         return $this->makeArrayOfFormElements($queryResult);
@@ -33,7 +33,7 @@ class form_element_db
         $choicesString = $this->getChoicesString($choices);
 
         $query = '
-            INSERT INTO '. $this->form_element_table.'(form_element_name, form_element_type, form_element_choices) 
+            INSERT INTO '. $this->form_element_table.'(form_element_name, form_element_type, form_element_choices)
             VALUES (\''.$form_element_name.'\', \''.$form_element_type.'\', \''.$choicesString.'\')
         ;';
         pwg_query($query);
@@ -127,7 +127,7 @@ class form_element_db
 
     function getElementTypeByName($form_element_name){
         $query = '
-            SELECT form_element_type  
+            SELECT form_element_type
             FROM '.$this->form_element_table.'
             WHERE form_element_name = \''.$form_element_name.'\'';
         return pwg_db_fetch_assoc(pwg_query($query));
@@ -135,7 +135,7 @@ class form_element_db
 
     function getFormOptionsByName($form_element_name){
         $query = '
-            SELECT form_element_choices  
+            SELECT form_element_choices
             FROM '.$this->form_element_table.'
             WHERE form_element_name = \''.$form_element_name.'\'';
         return pwg_db_fetch_assoc(pwg_query($query));

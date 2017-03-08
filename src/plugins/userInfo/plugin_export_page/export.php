@@ -26,8 +26,10 @@ $tabsheet->assign();
 /* Initialisation */
 
 include_once(USER_INFO_PATH."/include/user_info_db.php");
+include_once(USER_INFO_PATH."/include/form_element_db.php");
 
 $user_info_db = new user_info_db();
+$form_element_db = new form_element_db();
 
 $filename="formulaires_sante.csv";
 
@@ -41,10 +43,18 @@ if(isset($_POST['confirm'])){
 
   //Searching of all the forms from the DB
 
+  $elements = $form_element_db -> getAllFormElements();
   $result = $user_info_db -> getAllUsersInfo();
 
   //Writing these data in csv file
 
+  $header=array();
+  array_push($header, "User ID");
+  foreach($elements as $fields){
+    array_push($header, $fields[0]);
+  }
+
+  fputcsv($handle, $header);
   while($row = pwg_db_fetch_assoc($result))
   {
       fputcsv($handle, $row);

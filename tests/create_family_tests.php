@@ -15,7 +15,7 @@ class create_family_tests extends PHPUnit_Framework_TestCase
 
     public function test_attempt_to_create_family_that_already_exists()
     {
-	$output=shell_exec('../src/createFamily.sh var4');
+	$output=shell_exec('./src/createFamily.sh var4');
 	$expected="La famille var4 existe déjà\n";
 
 	$this->assertEquals($expected,$output);

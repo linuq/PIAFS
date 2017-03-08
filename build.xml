@@ -7,7 +7,7 @@
     <target name="build"
         depends="build-common" />
 
-    <target name="build-common" depends="prepare,composer,phpunit,behat,composer-update" />
+    <target name="build-common" depends="prepare,composer,chmod_task_delete,chmod_task_create,phpunit,behat,composer-update" />
 
     <target name="clean" depends="clean-build,clean-composer" description="Cleanup build and composer artifacts" />
 
@@ -45,6 +45,20 @@
             <arg value="update" />
         </exec>
     </target>
+    
+    <target name="chmod_task_create">
+        <exec executable="chmod">
+            <arg value="--R 777"/>
+            <arg value="./tests/create_family_tests.php"/>
+        </exec>
+     </target>
+    
+    <target name="chmod_task_delete">
+        <exec executable="chmod">
+            <arg value="-R 777"/>
+            <arg value="./tests/delete_family_tests.php"/>
+        </exec>
+     </target>
 
     <target name="phpunit" description="Run unit tests with PHPUnit">
         <exec executable="phpunit" failonerror="true">

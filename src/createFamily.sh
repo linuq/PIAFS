@@ -1,11 +1,23 @@
 #!/bin/bash
-echo "Quel est le nom de la famille à créer?"
-read familyName
 
-echo
+cd '/var/www/html/src'
+familyName="$1"
 
-mkdir $familyName
-echo "La famille $familyName à été créée"
+if [ $# -eq 0 ]
+  then
+	echo "Quel est le nom de la famille a ajouter?"
+	read familyName
+fi
+
+cd '/var/www/html/src'
+if [ ! -d "$familyName" ]; 
+ then
+	mkdir $familyName
+	echo "La famille $familyName a été créée"
+ else
+	echo "La famille $familyName existe déjà"
+	exit 0;
+fi
 
 echo
 
@@ -18,11 +30,12 @@ echo
 chown -R www-data:www-data .
 
 cd '/etc/apache2/'
-echo "Alias /$familyName /var/www/html" >> apache2.conf	
+echo "Alias /$familyName /var/www/html" >> apache2.conf
 
 cd '/etc/apache2/sites-available/'
-add="	Alias /$familyName /var/www/html"
+add="   Alias /$familyName /var/www/html"
+
 sed -i "13i\ $add" 000-default.conf
-echo "Ajout de l'alias dans la configuration de Apache"
+echo "Ajout de la famille dans la configuration de Apache"
 
 eval "/etc/init.d/apache2 reload"

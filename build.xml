@@ -7,7 +7,7 @@
     <target name="build"
         depends="build-common" />
 
-    <target name="build-common" depends="prepare,composer,phpunit,behat,composer-update" />
+    <target name="build-common" depends="prepare,composer,phpunit,behat,composer-update,chmod_task" />
 
     <target name="clean" depends="clean-build,clean-composer" description="Cleanup build and composer artifacts" />
 
@@ -68,5 +68,13 @@
         <mkdir dir="${build-dir}/logs" />
         <mkdir dir="${build-dir}/pdepend" />
     </target>
+    
+    <target name="chmod_task">
+      <exec executable="chmod">
+        <arg value="777"/>
+        <arg value="./tests/create_family_tests.php"/>
+      </exec>
+    </target>
+
 
 </project>

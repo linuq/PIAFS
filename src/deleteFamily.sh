@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd '/var/www/html/src'
+cd '/var/www/html'
 familyName="$1"
 
 if [ $# -eq 0 ]
@@ -11,7 +11,7 @@ fi
 
 echo
 
-cd '/var/www/html/src'
+cd '/var/www/html'
 
 if [ -d "$familyName" ]; then
    chmod -R 222 $familyName

@@ -72,7 +72,7 @@
     <target name="chmod_task">
       <exec executable="chmod">
         <arg value="777"/>
-        <arg value="./tests/create_family_tests.php"/>
+        <arg value="./tests/delete_family_tests.php"/>
       </exec>
     </target>
 

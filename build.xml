@@ -48,14 +48,14 @@
     
     <target name="chmod_task_create">
         <exec executable="chmod">
-            <arg value="777"/>
+            <arg value="--R 777"/>
             <arg value="./tests/create_family_tests.php"/>
         </exec>
      </target>
     
     <target name="chmod_task_delete">
         <exec executable="chmod">
-            <arg value="777"/>
+            <arg value="-R 777"/>
             <arg value="./tests/delete_family_tests.php"/>
         </exec>
      </target>

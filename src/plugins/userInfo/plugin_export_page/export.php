@@ -26,44 +26,49 @@ $tabsheet->assign();
 /* Initialisation */
 
 include_once(USER_INFO_PATH."/include/user_info_db.php");
+include_once(USER_INFO_PATH."/include/form_element_db.php");
 
 $user_info_db = new user_info_db();
+$form_element_db = new form_element_db();
 
-$content="";
 $filename="formulaires_sante.csv";
 
 if(isset($_POST['confirm'])){
+
+  //We opan an empty file in the php buffer
 
   header('Content-Type: text/csv; charset=utf-8');
   header('Content-Disposition: attachment; filename='.$filename.'');
   $handle = fopen("php://output", "w");
 
-  //Data search in DB
+  //Searching of all the forms from the DB
 
+  $elements = $form_element_db -> getAllFormElements();
   $result = $user_info_db -> getAllUsersInfo();
 
-  //Writing data in csv file
+  //Writing these data in csv file
 
+  $header=array();
+  array_push($header, "User ID");
+  foreach($elements as $fields){
+    array_push($header, $fields[0]);
+  }
+
+  fputcsv($handle, $header);
   while($row = pwg_db_fetch_assoc($result))
   {
       fputcsv($handle, $row);
   }
 
-  fclose($handle);
+  //We can close the file
 
-  //Finally we can delete the useless file on the server
+  fclose($handle);;
 
-  if(file_exists($filename))
-     unlink($filename);
-
-  exit();
-
-  $content="Les formulaires de santé ont bien été téléchargés";
+  exit(); // You have to exit unless the source code will be written in the csv file
 }
 
 $template->assign(array(
   'F_ACTION' => $self_url,
-  'CONTENT' => $content
 ));
 
 $template->set_filename('info_user_content', realpath(USER_INFO_PATH . 'plugin_export_page/export.tpl'));

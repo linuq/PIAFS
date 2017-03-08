@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd '/var/www/html/src'
+cd '/var/www/html'
 familyName="$1"
 
 if [ $# -eq 0 ]
@@ -9,7 +9,7 @@ if [ $# -eq 0 ]
 	read familyName
 fi
 
-cd '/var/www/html/src'
+cd '/var/www/html'
 if [ ! -d "$familyName" ]; 
  then
 	mkdir $familyName

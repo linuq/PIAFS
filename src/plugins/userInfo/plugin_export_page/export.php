@@ -1,5 +1,5 @@
 <?php
-defined('SKELETON_PATH') or die('Hacking attempt!');
+defined('USER_INFO_PATH') or die('Hacking attempt!');
 
 // +-----------------------------------------------------------------------+
 // | Photo[Skeleton] tab                                                   |
@@ -10,9 +10,9 @@ $page['active_menu'] = get_active_menu('user_list'); // force oppening "Users" m
 /* Basic checks */
 check_status(ACCESS_ADMINISTRATOR);
 
-$my_base_url = get_root_url().'admin.php?page=';
+$my_base_url = get_root_url().'admin.php?page=user_list';
 
-$self_url = SKELETON_ADMIN.'-export';
+$self_url = USER_INFO_ADMIN.'-export';
 
 /* Tabs */
 // when adding a tab to an existing tabsheet you MUST reproduce the core tabsheet code
@@ -20,46 +20,50 @@ $self_url = SKELETON_ADMIN.'-export';
 include_once(PHPWG_ROOT_PATH.'admin/include/tabsheet.class.php');
 $tabsheet = new tabsheet();
 $tabsheet->set_id('users'); // <= don't forget tabsheet id
-$tabsheet->select('skeleton');
+$tabsheet->select('export');
 $tabsheet->assign();
 
 /* Initialisation */
 
+include_once(USER_INFO_PATH."/include/user_info_db.php");
+
+$user_info_db = new user_info_db();
+
 $content="";
-$file="formulaires_sante.csv";
+$filename="formulaires_sante.csv";
 
 if(isset($_POST['confirm'])){
 
-  //First we create an empty csv file on the server
-
-  $handle=fopen($file, "a+");
+  header('Content-Type: text/csv; charset=utf-8');
+  header('Content-Disposition: attachment; filename='.$filename.'');
+  $handle = fopen("php://output", "w");
 
   //Data search in DB
 
+  $result = $user_info_db -> getAllUsersInfo();
+
   //Writing data in csv file
 
-  /*foreach($form as $fields){
-    fputcsv($handle, $fields);
-  }*/
+  while($row = pwg_db_fetch_assoc($result))
+  {
+      fputcsv($handle, $row);
+  }
 
-  //Then we download the file on our local machine
-
-  header('Content-Transfer-Encoding: binary');
-  header('Content-Disposition: attachment; filename='.$file.'');
-  //readfile($file);
+  fclose($handle);
 
   //Finally we can delete the useless file on the server
 
-  if(file_exists($file))
-     unlink($file);
+  if(file_exists($filename))
+     unlink($filename);
+
+  exit();
 
   $content="Les formulaires de santé ont bien été téléchargés";
 }
 
 $template->assign(array(
   'F_ACTION' => $self_url,
-  'skeleton' => $conf['skeleton'],
   'CONTENT' => $content
 ));
 
-$template->set_filename('skeleton_content', realpath(SKELETON_PATH . 'admin/export.tpl'));
+$template->set_filename('info_user_content', realpath(USER_INFO_PATH . 'plugin_export_page/export.tpl'));

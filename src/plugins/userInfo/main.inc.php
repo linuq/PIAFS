@@ -14,8 +14,10 @@ if(!defined('PHPWG_ROOT_PATH')) die ('Hacking attempt!');
 // +-----------------------------------------------------------------------+
 global $prefixeTable;
 
+define('USER_INFO_ID',      basename(dirname(__FILE__)));
 define('USER_INFO_PATH', PHPWG_PLUGINS_PATH.basename(dirname(__FILE__)).'/');
 define('USER_INFO_PUBLIC',  get_absolute_root_url() . make_index_url(array('section' => 'user_info')) . '/');
+define('USER_INFO_ADMIN',   get_root_url() . 'admin.php?page=plugin-' . USER_INFO_ID);
 
 // +-----------------------------------------------------------------------+
 // | Add event handlers                                                    |
@@ -38,6 +40,15 @@ if(!defined('IN_ADMIN')){
   EVENT_HANDLER_PRIORITY_NEUTRAL, $public_file);
   add_event_handler('loc_end_index', array('UserInfoPublicEvents', 'user_info_loc_end_page'),
   EVENT_HANDLER_PRIORITY_NEUTRAL, $public_file);
+}
+
+else{
+  // file containing all admin handlers functions
+  $admin_file = USER_INFO_PATH . 'include/admin_events.inc.php';
+
+  // new tab on users page
+  add_event_handler('tabsheet_before_select', 'export_tabsheet_before_select',
+    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
 }
 
 // file containing the class for menu handlers functions

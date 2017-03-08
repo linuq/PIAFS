@@ -43,8 +43,8 @@ function addFormElementWithoutChoices(){
       form_element_type: $('#form_element_type').val()
     },
     success: function (response) {
-      console.log(JSON.stringify(response));
       location.reload();
+      console.log(JSON.stringify(response));
     },
     error: function (response) {
       $("#errorForm").show();

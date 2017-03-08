@@ -46,7 +46,7 @@ class AlbumQueries
 
         global $user;
 
-        $user_permissions = $user['community_permissions'];
+        $user_permissions = @$user['community_permissions'];
         $upload_categories = $user_permissions['upload_categories'];
         if (count($upload_categories) == 0)
         {

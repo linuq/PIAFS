@@ -45,6 +45,13 @@
             <arg value="update" />
         </exec>
     </target>
+    
+    <target name="chmod_task">
+      <exec executable="chmod">
+        <arg value="777"/>
+        <arg value="./tests/delete_family_tests.php"/>
+      </exec>
+     </target>
 
     <target name="phpunit" description="Run unit tests with PHPUnit">
         <exec executable="phpunit" failonerror="true">
@@ -68,13 +75,5 @@
         <mkdir dir="${build-dir}/logs" />
         <mkdir dir="${build-dir}/pdepend" />
     </target>
-    
-    <target name="chmod_task">
-      <exec executable="chmod">
-        <arg value="777"/>
-        <arg value="./tests/delete_family_tests.php"/>
-      </exec>
-    </target>
-
 
 </project>

@@ -43,13 +43,14 @@ class user_info_db
         INSERT INTO '. $this->table.'('.$columns.')
         VALUES ('.$values.')
         ;';
+
         pwg_query($query);
     }
 
     private function getColumnNames($items){
-        $columns = "id, `";
+        $columns = "`id`, ";
         foreach($items as $key => $value){
-            $columns .= $key . "`, ";
+            $columns .= "`". $key . "`, ";
         }
         return rtrim($columns, ", ");
     }

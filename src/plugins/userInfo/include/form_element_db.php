@@ -114,13 +114,13 @@ class form_element_db
     }
 
     private function makeArrayOfFormElements($queryResult){
-        $form_elements = array();
+        $form_elements = [];
         foreach($queryResult as $queryRow){
-            $array_to_push = array();
+            $array_to_push = [];
             foreach($queryRow as $queryColumn){
-                array_push($array_to_push, $queryColumn);
+                $array_to_push[] = $queryColumn;
             }
-            array_push($form_elements, $array_to_push);
+            $form_elements[] = $array_to_push;
         }
         return $form_elements;
     }
